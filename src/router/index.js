@@ -19,10 +19,10 @@ const router = createRouter({
       children: [
         {
           path: '',
-          redirect: 'home'
+          redirect: 'app'
         },
         {
-          path: 'home',
+          path: 'app',
           name: 'home',
           component: HomeView
         }
@@ -32,20 +32,20 @@ const router = createRouter({
       path: '/ingresar',
       name: 'login',
       component: InicioSesionVista
-    },
+    }
     // {
     //   path: '/',
     //   name: 'home',
     //   component: HomeView
     // },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../views/AboutView.vue')
+    // }
   ]
 })
 
