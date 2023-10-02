@@ -8,6 +8,8 @@ import CocherasList from '../views/cocheras/CocherasList.vue'
 import CocherasForm from '../views/cocheras/CocherasForm.vue'
 import VehiculosList from '../views/vehiculos/VehiculosList.vue'
 import VehiculosForm from '../views/vehiculos/VehiculosForm.vue'
+import PublicacionesList from '../views/publicaciones/PublicacionesList.vue'
+import PublicacionesForm from '../views/publicaciones/PublicacionesForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +47,18 @@ const router = createRouter({
           path: '/vehiculos/:id',
           name: 'vehiculosForm',
           component: VehiculosForm
+        },
+
+        // PUBLICACIONES
+        {
+          path: '/publicaciones',
+          name: 'publicacionesList',
+          component: PublicacionesList
+        },
+        {
+          path: '/publicaciones/:id',
+          name: 'publicacionesForm',
+          component: PublicacionesForm
         }
       ]
     },

@@ -1,19 +1,20 @@
-import backend from '../api/backend.js'
+import axios from 'axios'
+import URL from '../api/backend.js'
 
 export const get = (path) => {
-  return backend.get(path)
+  return axios.get(URL + path)
 }
 
 export const post = (path, obj) => {
-  return backend.post(path, obj)
+  return axios.post(URL + path, obj)
 }
 
 export const put = (path, obj) => {
-  return backend.put(path, obj)
+  return axios.put(path, obj)
 }
 
 export const del = (path) => {
-  return backend.delete(path)
+  return axios.delete(URL + path)
 }
 
 export default class CRUD {
