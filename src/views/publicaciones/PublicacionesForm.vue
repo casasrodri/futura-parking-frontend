@@ -34,8 +34,8 @@
             <br>
             <label for="tipo">Cochera:</label>
             <select v-model="publi.cochera">
-                <option value="68">68</option>
-                <option value="69">69</option>
+                <option v-for="coch in cocherasPropietario" :key="coch._id" :value="coch._id">{{ coch.numero }} ({{
+                    coch.tipo }})</option>
             </select>
 
             <br>
@@ -47,8 +47,7 @@
             <br>
             <label for="tipo">Vehículo:</label>
             <select v-model="publi.demanda.vehiculo">
-                <option value="AE202FP">AE202FP</option>
-                <option value="ISR621">ISR621</option>
+                <option v-for="vehi in vehiculosPropietario" :key="vehi._id" :value="vehi._id">{{ vehi.patente }}</option>
             </select>
         </div>
 
@@ -81,6 +80,9 @@ const actualizar = async () => {
     // router.push({ name: 'publicacionesList' })
 }
 
+const cocherasPropietario = ref([])
+const vehiculosPropietario = ref([])
+
 const registrar = async () => {
     alert('Se está creando la nueva cochera')
 
@@ -102,6 +104,9 @@ const btnGuardar = ref('Actualizar')
 const btnFuncion = ref(actualizar)
 const routes = useRoute()
 
+import Cochera from '../../api/cocheras.js'
+import Vehiculo from '../../api/vehiculos.js'
+
 onMounted(async () => {
     if (routes.params.id === 'alta') {
         console.log('alta')
@@ -112,6 +117,15 @@ onMounted(async () => {
         const res = await Publicacion.get(routes.params.id)
         publi.value = res.data
     }
+
+    // Carga de opciones de cochera
+    const res = await Cochera.obtenerDelPropietario()
+    cocherasPropietario.value = res.data
+
+    // Carga de opciones de vehículo
+    const res2 = await Vehiculo.obtenerDelPropietario()
+    vehiculosPropietario.value = res2.data
+
 })
 
 </script>
