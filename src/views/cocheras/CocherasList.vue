@@ -51,7 +51,8 @@ const deleteCochera = async (id) => {
 }
 
 const cargarCocheras = async () => {
-    const res = await Cocheras.getAll()
+    const res = await Cocheras.obtenerDelPropietario()
+    console.log(res)
     cocheras.value = res.data
 }
 

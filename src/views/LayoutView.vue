@@ -18,10 +18,6 @@ import { get } from '../api/index.js'
 
 onMounted(async () => {
     const router = useRouter()
-    console.log(await checkLogged())
-    const infoSesion = await get('/api/sesiones')
-    console.log(infoSesion.data)
-    // FIXME Me genera una cookie de session distinta con cada F5
     if (!await checkLogged()) router.push({ name: 'login' })
 })
 

@@ -39,9 +39,23 @@ const cochera = ref({
     observaciones: ''
 })
 
+import { put } from '../../api/index.js'
+import axios from 'axios';
+
 const actualizar = async () => {
     alert('Se está actualizando')
-    const res = await Cochera.update(cochera.value._id, cochera.value)
+
+    const cocheraActualizada = {
+        numero: cochera.value.numero,
+        // tipo: cochera.value.tipo,
+        // observaciones: cochera.value.observaciones
+    }
+
+    // const res = await Cochera.update(cochera.value._id, cocheraActualizada)
+    console.log('Funciona:', `http://localhost:8080/api/cocheras/${cochera.value._id}`)
+    const res = await put(`/api/cocheras/${cochera.value._id}`, cocheraActualizada)
+
+    // const res = await axios.put(`http://localhost:8080/api/cocheras/${cochera.value._id}`, cocheraActualizada)
     console.log(res)
     alert('Actualizada!!')
     router.push({ name: 'cocherasList' })
@@ -70,12 +84,13 @@ const routes = useRoute()
 
 onMounted(async () => {
     if (routes.params.id === 'alta') {
-        console.log('alta')
+        // console.log('alta')
         btnGuardar.value = 'Registrar'
         btnFuncion.value = registrar
     } else {
-        console.log('editar')
+        // console.log('editar')
         const res = await Cochera.get(routes.params.id)
+        // console.log(res)
         cochera.value = res.data
     }
 })
