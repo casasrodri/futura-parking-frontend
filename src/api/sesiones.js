@@ -1,9 +1,9 @@
 import { get, post } from './index.js'
 
-export const checkLogged = async () => {
+export const getSessionInfo = async () => {
   const infoSesion = await get('/api/sesiones')
   console.log(infoSesion.data)
-  return infoSesion.data.isLogged
+  return infoSesion.data
 }
 
 export const login = async (email, password) => {

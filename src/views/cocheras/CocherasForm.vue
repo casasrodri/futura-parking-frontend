@@ -44,19 +44,7 @@ import axios from 'axios';
 
 const actualizar = async () => {
     alert('Se está actualizando')
-
-    const cocheraActualizada = {
-        numero: cochera.value.numero,
-        // tipo: cochera.value.tipo,
-        // observaciones: cochera.value.observaciones
-    }
-
-    // const res = await Cochera.update(cochera.value._id, cocheraActualizada)
-    console.log('Funciona:', `http://localhost:8080/api/cocheras/${cochera.value._id}`)
-    const res = await put(`/api/cocheras/${cochera.value._id}`, cocheraActualizada)
-
-    // const res = await axios.put(`http://localhost:8080/api/cocheras/${cochera.value._id}`, cocheraActualizada)
-    console.log(res)
+    const res = await Cochera.update(cochera.value._id, cochera.value)
     alert('Actualizada!!')
     router.push({ name: 'cocherasList' })
 }

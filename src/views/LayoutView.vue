@@ -13,12 +13,13 @@
 import { RouterView } from 'vue-router'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { checkLogged } from '../api/sesiones.js'
-import { get } from '../api/index.js'
+import { getSessionInfo } from '../api/sesiones.js'
 
 onMounted(async () => {
     const router = useRouter()
-    if (!await checkLogged()) router.push({ name: 'login' })
+    const sessionInfo = await getSessionInfo()
+    // console.log(sessionInfo)
+    if (!sessionInfo.isLogged) router.push({ name: 'login' })
 })
 
 </script>
