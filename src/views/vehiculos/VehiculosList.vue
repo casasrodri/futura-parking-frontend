@@ -53,7 +53,7 @@ const deleteCochera = async (id) => {
 }
 
 const cargarVehiculos = async () => {
-    const res = await Vehiculos.getAll()
+    const res = await Vehiculos.obtenerDelPropietario()
     vehiculos.value = res.data
 }
 
