@@ -18,6 +18,7 @@
 
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { post } from '../api/index.js'
 
 
 import axios from 'axios'
@@ -35,10 +36,11 @@ const errores = ref([])
 const login = async () => {
     // FIXME: Hacer algunas validaciones al formulario
     try {
-        const res = await axios.post('http://localhost:8080/api/usuarios', nuevoUsuario.value)
+        const res = await post('/api/usuarios', nuevoUsuario.value)
+        console.log(res)
 
         if (res.status === 200) {
-            router.push({ name: 'principal' })
+            router.push({ name: 'home' })
         }
     } catch (error) {
         console.log(error.response.data)

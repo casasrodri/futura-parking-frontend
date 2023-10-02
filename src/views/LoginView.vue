@@ -33,6 +33,7 @@ const login = async () => {
 
     try {
         const res = await apiLogin(username.value, password.value)
+        console.log(res)
         if (res.data.ok) router.push({ name: 'home' })
     } catch (e) {
         console.log(e)
