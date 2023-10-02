@@ -1,51 +1,63 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import RegistroUsuarioVista from '../views/RegistroUsuarioVista.vue'
-import PrincipalVista from '../views/PrincipalVista.vue'
-import InicioSesionVista from '../views/InicioSesionVista.vue'
+import SignupView from '../views/SignupView.vue'
+import LayoutView from '../views/LayoutView.vue'
+import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
+
+import CocherasList from '../views/cocheras/CocherasList.vue'
+import CocherasForm from '../views/cocheras/CocherasForm.vue'
+import VehiculosList from '../views/vehiculos/VehiculosList.vue'
+import VehiculosForm from '../views/vehiculos/VehiculosForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/registro',
-      name: 'signup',
-      component: RegistroUsuarioVista
-    },
-    {
       path: '/',
       name: 'principal',
-      component: PrincipalVista,
+      component: LayoutView,
       children: [
         {
-          path: '',
-          redirect: 'app'
-        },
-        {
-          path: 'app',
+          path: '/',
           name: 'home',
           component: HomeView
+          // redirect: 'app'
+        },
+        // COCHERAS
+        {
+          path: '/cocheras',
+          name: 'cocherasList',
+          component: CocherasList
+        },
+        {
+          path: '/cocheras/:id',
+          name: 'cocherasForm',
+          component: CocherasForm
+        },
+
+        // VEHICULOS
+        {
+          path: '/vehiculos',
+          name: 'vehiculosList',
+          component: VehiculosList
+        },
+        {
+          path: '/vehiculos/:id',
+          name: 'vehiculosForm',
+          component: VehiculosForm
         }
       ]
     },
     {
-      path: '/ingresar',
+      path: '/ingreso',
       name: 'login',
-      component: InicioSesionVista
+      component: LoginView
+    },
+    {
+      path: '/registro',
+      name: 'signup',
+      component: SignupView
     }
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: HomeView
-    // },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
   ]
 })
 
