@@ -28,6 +28,10 @@
         </select>
 
         <br>
+        <label for="numero">Alias</label>
+        <input type="text" v-model="vehiculo.alias" placeholder="Alias" />
+
+        <br>
         <button type="submit">{{ btnGuardar }}</button>
     </form>
 
@@ -62,7 +66,8 @@ const registrar = async () => {
         modelo: vehiculo.value.modelo,
         color: vehiculo.value.color,
         tipo: vehiculo.value.tipo,
-        propietario: '6513a457bed50d37c2a7910a' // FIXME: Ver cómo obtener el id del usuario logueado
+        propietario: '6513a457bed50d37c2a7910a', // FIXME: Ver cómo obtener el id del usuario logueado
+        alias: vehiculo.value.alias,
     }
 
     const res = await Cochera.create(nuevoVehiculo)

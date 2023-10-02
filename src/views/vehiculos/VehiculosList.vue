@@ -5,6 +5,7 @@
         <thead>
             <tr>
                 <!-- <th>Id</th> -->
+                <th>Alias</th>
                 <th>Patente</th>
                 <th>Tipo</th>
                 <th>Modelo</th>
@@ -15,6 +16,7 @@
         <tbody>
             <tr v-for="vehiculo in vehiculos" :key="vehiculo._id">
                 <!-- <td>{{ vehiculo._id }}</td> -->
+                <td>{{ vehiculo.alias }}</td>
                 <td>{{ vehiculo.patente }}</td>
                 <td>{{ vehiculo.tipo }}</td>
                 <td>{{ vehiculo.marca }} {{ vehiculo.modelo }}</td>

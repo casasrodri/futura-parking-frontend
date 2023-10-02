@@ -47,7 +47,8 @@
             <br>
             <label for="tipo">Vehículo:</label>
             <select v-model="publi.demanda.vehiculo">
-                <option v-for="vehi in vehiculosPropietario" :key="vehi._id" :value="vehi._id">{{ vehi.patente }}</option>
+                <option v-for="vehi in vehiculosPropietario" :key="vehi._id" :value="vehi._id">{{ vehi.alias }} ({{
+                    vehi.patente }})</option>
             </select>
         </div>
 
