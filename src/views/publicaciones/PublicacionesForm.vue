@@ -13,18 +13,15 @@
 
         <br>
         <label for="ini">Inicio:</label>
-        <input type="date" id="ini-date" v-model="publi.ini.date" />
-        <input type="time" id="ini-time" v-model="publi.ini.time" />
+        <input type="datetime-local" v-model="publi.ini" />
 
         <br>
         <label for="fin">Fin:</label>
-        <input type="date" id="fin-date" v-model="publi.fin.date" />
-        <input type="time" id="fin-time" v-model="publi.fin.time" />
+        <input type="datetime-local" v-model="publi.fin" :min="publi.ini" />
 
         <br>
         <label for="vencimiento">Vencimiento:</label>
-        <input type="date" id="vencimiento-date" v-model="publi.vencimiento.date" />
-        <input type="time" id="vencimiento-time" v-model="publi.vencimiento.time" />
+        <input type="datetime-local" v-model="publi.vencimiento" :min="publi.ini" :max="publi.fin" />
 
         <br>
         <label for="observaciones">Observaciones:</label>
@@ -60,45 +57,55 @@
     {{ errores }}
 
     <br><br>
-    {{ publi }}
+    {{ publiGuardar }}
+
+    <br><br>
+    {{ usuarioLogueado }}
 </template>
 
 <script setup>
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Publicacion from '../../api/publicaciones.js'
 
 const router = useRouter()
 const errores = ref([])
-const publi = ref({ tipo: '', oferta: {}, demanda: {}, ini: {}, fin: {}, vencimiento: {} })
+const publi = ref({ oferta: {}, demanda: {} })
+const usuarioLogueado = ref('')
 
 const actualizar = async () => {
-    alert('Se está actualizando')
-    // const res = await Publicacion.update(cochera.value._id, cochera.value)
-    // console.log(res)
+    alert('Se está actualizando la publicación...')
+    const res = await Publicacion.update(publi.value._id, publiGuardar.value)
+    console.log(res)
     alert('Actualizada!!')
     // router.push({ name: 'publicacionesList' })
 }
+
+const publiGuardar = computed(() => {
+    const guardar = { ...publi.value }
+    guardar.creador = usuarioLogueado.value
+    guardar.estado = 'disponible'
+
+    if (publi.value.tipo === 'oferta') {
+        guardar.cochera = publi.value.cochera
+        guardar.precio = publi.value.precio
+    } else {
+        guardar.vehiculo = publi.value.demanda.vehiculo
+    }
+
+    return guardar
+})
 
 const cocherasPropietario = ref([])
 const vehiculosPropietario = ref([])
 
 const registrar = async () => {
-    alert('Se está creando la nueva cochera')
-
-    // const nuevaCochera = {
-    //     numero: publi.value.numero,
-    //     tipo: publi.value.tipo,
-    //     observaciones: publi.value.observaciones,
-    //     propietario: '6513a457bed50d37c2a7910a' // FIXME: Ver cómo obtener el id del usuario logueado
-
-    // }
-
-    // const res = await Publicacion.create(nuevaCochera)
-    // console.log(res)
+    alert('Se está creando la nueva publicación...')
+    const res = await Publicacion.create(publiGuardar.value)
+    console.log(res)
     alert('Creada!!')
-    // router.push({ name: 'publicacionesList' })
+    router.push({ name: 'publicacionesList' })
 }
 
 const btnGuardar = ref('Actualizar')
@@ -107,16 +114,54 @@ const routes = useRoute()
 
 import Cochera from '../../api/cocheras.js'
 import Vehiculo from '../../api/vehiculos.js'
+import { getSessionInfo } from '../../api/sesiones.js'
+import { DateTime } from 'luxon';
 
 onMounted(async () => {
+
+    // Obtener usuario:
+    const session = await getSessionInfo()
+    usuarioLogueado.value = session.usuario
+
+
     if (routes.params.id === 'alta') {
-        console.log('alta')
+        // console.log('alta')
         btnGuardar.value = 'Registrar'
         btnFuncion.value = registrar
+
     } else {
-        console.log('editar')
+        // console.log('editar')
         const res = await Publicacion.get(routes.params.id)
-        publi.value = res.data
+        const publicacion = { ...res.data }
+
+        publicacion.demanda = {
+            vehiculo: publicacion.vehiculo ? publicacion.vehiculo._id : ''
+        }
+
+        publicacion.oferta = {
+            cochera: publicacion.cochera ? publicacion.cochera._id : '',
+            precio: publicacion.cochera ? publicacion.precio : ''
+        }
+
+        // Convertir las horas a formato date y time
+        publicacion.ini = {
+            date: DateTime.fromISO(publicacion.ini).toFormat('yyyy-MM-dd'),
+            time: DateTime.fromISO(publicacion.ini).toFormat('HH:mm'),
+        }
+
+        publicacion.fin = {
+            date: DateTime.fromISO(publicacion.fin).toFormat('yyyy-MM-dd'),
+            time: DateTime.fromISO(publicacion.fin).toFormat('HH:mm'),
+        }
+
+        publicacion.vencimiento = {
+            date: DateTime.fromISO(publicacion.vencimiento).toFormat('yyyy-MM-dd'),
+            time: DateTime.fromISO(publicacion.vencimiento).toFormat('HH:mm'),
+        }
+
+        publi.value = publicacion
+
+        // TODO Agregar la opción del estado
     }
 
     // Carga de opciones de cochera

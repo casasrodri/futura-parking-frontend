@@ -1,6 +1,6 @@
 <template>
     <h2>Mis vehículos</h2>
-
+    <!-- TODO podria agregar la persona que maneja el vehiculo, para poder avisar a la guardia. Opción (Conductor: yo o habilitar campo) -->
     <table class="table table-striped">
         <thead>
             <tr>

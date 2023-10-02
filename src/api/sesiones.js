@@ -2,7 +2,7 @@ import { get, post } from './index.js'
 
 export const getSessionInfo = async () => {
   const infoSesion = await get('/api/sesiones')
-  console.log(infoSesion.data)
+  // console.log(infoSesion.data)
   return infoSesion.data
 }
 
