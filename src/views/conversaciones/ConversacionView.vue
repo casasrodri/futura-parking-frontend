@@ -63,8 +63,8 @@ const enviarMensaje = () => {
     mensaje.value = ''
 }
 
-socket.on('nuevoMensaje', (message) => {
-    mensajes.value.push(message)
+socket.on('nuevoMensaje', (usuario, mensaje) => {
+    mensajes.value.push(`${usuario}: ${mensaje}`)
 });
 
 
