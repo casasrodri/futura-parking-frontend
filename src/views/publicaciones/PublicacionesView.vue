@@ -66,6 +66,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Publicacion from '../../api/publicaciones.js';
+import Conversacion from '../../api/conversaciones.js';
 import { useRoute, useRouter } from 'vue-router';
 
 import { getSessionInfo } from '../../api/sesiones.js';
@@ -94,7 +95,7 @@ onMounted(async () => {
     console.log('esCreador', esCreador.value)
 });
 
-const crearChat = () => {
+const crearChat = async () => {
     const datos = {
         publicacion: publicacion.value._id,
         tipo: publicacion.value.tipo,
@@ -102,7 +103,11 @@ const crearChat = () => {
         oferente: publicacion.value.tipo === 'demanda' ? sessionInfo.value.usuario : publicacion.value.creador._id,
     }
     console.log(datos)
-    // TODO
+
+    const res = await Conversacion.create(datos)
+    console.log(res.data)
+
+    router.push({ path: '/conversaciones/' + res.data._id })
 }
 
 </script>
