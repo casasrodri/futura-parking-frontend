@@ -39,18 +39,25 @@
     </div>
 
     <!-- TODO -->
-    <div v-if="!esCreador">
-        % coincidencia: 88,90%
+    <div v-if="esCreador">
+        <h2 class="block">MENSAJES</h2>
+        Aún no hay mensajes...
     </div>
-
-    <h2 class="block">MENSAJES</h2>
-    Aún no hay mensajes...
-
-    <div v-if="!esCreador">
+    <div v-else>
+        <!-- TODO Ver como calcular el porcentaje -->
         <br>
-        <a>Contactar</a>
+        % coincidencia: 88,90%
+
+
+
+        <br>
+        <a @click="crearChat">
+            Contactar por esta publicación
+        </a>
     </div>
 
+
+    <!-- TODO Ver si esto lo ven ambos, o el publicador -->
     <br>
     <br>
     <h2 class="block">PUBLICACIONES RELACIONADAS</h2>
@@ -72,20 +79,30 @@ const routes = useRoute()
 const router = useRouter()
 
 const atrasPag = () => router.go(-1)
+const sessionInfo = ref({})
 
 onMounted(async () => {
     const res = await Publicacion.get(routes.params.id);
     publicacion.value = res.data
 
-    const sessionInfo = await getSessionInfo()
+    sessionInfo.value = await getSessionInfo()
 
     const creadorPubli = publicacion.value.creador._id
-    const usuarioLogueado = sessionInfo.usuario
+    const usuarioLogueado = sessionInfo.value.usuario
     esCreador.value = creadorPubli === usuarioLogueado
 
     console.log('esCreador', esCreador.value)
-
-
 });
+
+const crearChat = () => {
+    const datos = {
+        publicacion: publicacion.value._id,
+        tipo: publicacion.value.tipo,
+        demandante: publicacion.value.tipo === 'demanda' ? publicacion.value.creador._id : sessionInfo.value.usuario,
+        oferente: publicacion.value.tipo === 'demanda' ? sessionInfo.value.usuario : publicacion.value.creador._id,
+    }
+    console.log(datos)
+    // TODO
+}
 
 </script>

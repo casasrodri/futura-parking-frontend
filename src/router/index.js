@@ -11,6 +11,7 @@ import VehiculosForm from '../views/vehiculos/VehiculosForm.vue'
 import PublicacionesList from '../views/publicaciones/PublicacionesList.vue'
 import PublicacionesForm from '../views/publicaciones/PublicacionesForm.vue'
 import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
+import ConversacionView from '../views/conversaciones/ConversacionView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,6 +71,13 @@ const router = createRouter({
           path: '/publicaciones/ver/:id',
           name: 'publicacionesView',
           component: PublicacionesView
+        },
+
+        // MENSAJES
+        {
+          path: '/conversaciones/:id',
+          name: 'conversacionView',
+          component: ConversacionView
         }
       ]
     },

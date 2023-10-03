@@ -8,11 +8,13 @@
         </RouterLink>
 
         <div class="block" v-if="usuario">
-            Usuario: {{ usuario }}
+            Usuario: {{ usuario.nombre }} (id: {{ usuario.id }})
+
             <button @click="cerrarSesion">
                 Cerrar sesión
             </button>
         </div>
+        <hr>
 
         <RouterView />
     </div>
@@ -25,7 +27,7 @@ import { useRouter } from 'vue-router'
 import { getSessionInfo } from '../api/sesiones.js'
 import { post } from '../api/index.js'
 
-const usuario = ref('')
+const usuario = ref({})
 const router = useRouter()
 
 const cerrarSesion = async () => {
@@ -39,7 +41,8 @@ onMounted(async () => {
     console.log(sessionInfo)
     if (!sessionInfo.isLogged) router.push({ name: 'login' })
 
-    usuario.value = sessionInfo.nombre
+    usuario.value.nombre = sessionInfo.nombre
+    usuario.value.id = sessionInfo.usuario
 })
 
 </script>
