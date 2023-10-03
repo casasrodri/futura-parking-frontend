@@ -51,30 +51,32 @@ onMounted(async () => {
 
     const res2 = await getSessionInfo()
     sessionInfo.value = res2
+
+    socket.emit('unirseChat', datosConversacion.value.publicacion._id);
 })
 
 
 const mensajes = ref([])
 const enviarMensaje = () => {
-    socket.emit('newMessage', datosConversacion.value.publicacion._id, sessionInfo.value.usuario, mensaje.value);
+    // socket.emit('newMessage', datosConversacion.value.publicacion._id, sessionInfo.value.usuario, mensaje.value);
+    socket.emit('crearMensaje', datosConversacion.value.publicacion._id, sessionInfo.value.nombre, mensaje.value)
     mensaje.value = ''
 }
 
-socket.on('avisoDelServer', (mensaje) => {
-    mensajes.value.push(mensaje)
-})
+socket.on('nuevoMensaje', (message) => {
+    mensajes.value.push(message)
+});
 
 
 const usuariosEscribiendo = ref({})
-const mostrarEscribiendo = ref([])
+const mostrarEscribiendo = ref('')
 
-socket.on('mostrarEscribiendo', (pub, usuario, i) => {
-    if (pub === datosConversacion.value.publicacion._id) {
-        usuariosEscribiendo.value[usuario] = usuariosEscribiendo.value[usuario] || 0
-        usuariosEscribiendo.value[usuario] += i
-    }
-
+socket.on('mostrarEscribiendo', (usuario, i) => {
     let usuarios = ''
+
+    usuariosEscribiendo.value[usuario] = usuariosEscribiendo.value[usuario] || 0
+    usuariosEscribiendo.value[usuario] += i
+
     Object.keys(usuariosEscribiendo.value).forEach((usuario) => {
         if (usuariosEscribiendo.value[usuario] > 0) {
             usuarios += usuario + ' está escribiendo...'
@@ -93,5 +95,7 @@ const escribiendo = () => {
         socket.emit('noEscribiendo', publicacion, usuario);
     }, 1000);
 }
+
+
 
 </script>
