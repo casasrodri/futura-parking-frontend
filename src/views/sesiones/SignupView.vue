@@ -15,7 +15,7 @@
             <input type="password" v-model="nuevoUsuario.password" placeholder="Password" />
             <br>
             <label for="cbu">CBU/Alias:</label>
-            <input type="password" v-model="nuevoUsuario.cbu" placeholder="CBU/Alias" />
+            <input type="text" v-model="nuevoUsuario.cbu" placeholder="CBU/Alias" />
             <br><br>
             <button type="submit">Registrarse</button>
         </form>
