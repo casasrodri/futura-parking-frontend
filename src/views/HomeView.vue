@@ -5,12 +5,17 @@
   <u>Menú</u>
 
   <ul>
-    <li><router-link :to="{ name: 'cocherasList' }">Cocheras</router-link></li>
-    <li><router-link :to="{ name: 'vehiculosList' }">Vehiculos</router-link></li>
-    <li><router-link :to="{ name: 'publicacionesList' }">Publicaciones</router-link></li>
-    <!-- <li><router-link to="/estacionamientos">Estacionamientos</router-link></li>
-    <li><router-link to="/reservas">Reservas</router-link></li>
-    <li><router-link to="/vehiculos">Vehículos</router-link></li>
-    <li><router-link to="/zonas">Zonas</router-link></li> -->
-  </ul>
-</template>
+    <li>
+      <RouterLink :to="{ name: 'cocherasList' }">Cocheras</RouterLink>
+    </li>
+    <li>
+      <RouterLink :to="{ name: 'vehiculosList' }">Vehiculos</RouterLink>
+    </li>
+    <li>
+      <RouterLink :to="{ name: 'publicacionesList' }">Publicaciones</RouterLink>
+    </li>
+    <!-- <li><RouterLink to="/estacionamientos">Estacionamientos</RouterLink></li>
+    <li><RouterLink to="/reservas">Reservas</RouterLink></li>
+    <li><RouterLink to="/vehiculos">Vehículos</RouterLink></li>
+    <li><RouterLink to="/zonas">Zonas</RouterLink></li> -->
+</ul></template>

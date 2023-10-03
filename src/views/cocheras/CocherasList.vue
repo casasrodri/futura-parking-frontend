@@ -18,8 +18,8 @@
                 <td>{{ cochera.tipo }}</td>
                 <td>{{ cochera.observaciones }}</td>
                 <td>
-                    <router-link :to="{ name: 'cocherasForm', params: { id: cochera._id } }"
-                        class="btn btn-warning btn-sm">Editar</router-link>
+                    <RouterLink :to="{ name: 'cocherasForm', params: { id: cochera._id } }" class="btn btn-warning btn-sm">
+                        Editar</RouterLink>
                     <button class="btn btn-danger btn-sm" @click="deleteCochera(cochera._id)">Eliminar</button>
                 </td>
             </tr>

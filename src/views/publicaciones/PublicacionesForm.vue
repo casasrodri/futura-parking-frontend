@@ -115,7 +115,7 @@ const routes = useRoute()
 import Cochera from '../../api/cocheras.js'
 import Vehiculo from '../../api/vehiculos.js'
 import { getSessionInfo } from '../../api/sesiones.js'
-import { DateTime } from 'luxon';
+import { fechaHora } from '../../utils/datetime.js';
 
 onMounted(async () => {
 
@@ -123,14 +123,13 @@ onMounted(async () => {
     const session = await getSessionInfo()
     usuarioLogueado.value = session.usuario
 
-
-    if (routes.params.id === 'alta') {
-        // console.log('alta')
+    if (routes.name === 'publicacionesAlta') {
+        console.log('alta')
         btnGuardar.value = 'Registrar'
         btnFuncion.value = registrar
 
     } else {
-        // console.log('editar')
+        console.log('editar')
         const res = await Publicacion.get(routes.params.id)
         const publicacion = { ...res.data }
 
@@ -144,20 +143,9 @@ onMounted(async () => {
         }
 
         // Convertir las horas a formato date y time
-        publicacion.ini = {
-            date: DateTime.fromISO(publicacion.ini).toFormat('yyyy-MM-dd'),
-            time: DateTime.fromISO(publicacion.ini).toFormat('HH:mm'),
-        }
-
-        publicacion.fin = {
-            date: DateTime.fromISO(publicacion.fin).toFormat('yyyy-MM-dd'),
-            time: DateTime.fromISO(publicacion.fin).toFormat('HH:mm'),
-        }
-
-        publicacion.vencimiento = {
-            date: DateTime.fromISO(publicacion.vencimiento).toFormat('yyyy-MM-dd'),
-            time: DateTime.fromISO(publicacion.vencimiento).toFormat('HH:mm'),
-        }
+        publicacion.ini = fechaHora(publicacion.ini)
+        publicacion.fin = fechaHora(publicacion.fin)
+        publicacion.vencimiento = fechaHora(publicacion.vencimiento)
 
         publi.value = publicacion
 

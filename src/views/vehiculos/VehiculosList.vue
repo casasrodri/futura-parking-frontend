@@ -22,8 +22,8 @@
                 <td>{{ vehiculo.marca }} {{ vehiculo.modelo }}</td>
                 <td>{{ vehiculo.color }}</td>
                 <td>
-                    <router-link :to="{ name: 'vehiculosForm', params: { id: vehiculo._id } }"
-                        class="btn btn-warning btn-sm">Editar</router-link>
+                    <RouterLink :to="{ name: 'vehiculosForm', params: { id: vehiculo._id } }"
+                        class="btn btn-warning btn-sm">Editar</RouterLink>
                     <button class="btn btn-danger btn-sm" @click="deleteCochera(vehiculo._id)">Eliminar</button>
                 </td>
             </tr>

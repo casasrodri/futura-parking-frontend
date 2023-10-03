@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import SignupView from '../views/SignupView.vue'
+import SignupView from '../views/sesiones/SignupView.vue'
+import LoginView from '../views/sesiones/LoginView.vue'
 import LayoutView from '../views/LayoutView.vue'
-import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 
 import CocherasList from '../views/cocheras/CocherasList.vue'
@@ -10,6 +10,7 @@ import VehiculosList from '../views/vehiculos/VehiculosList.vue'
 import VehiculosForm from '../views/vehiculos/VehiculosForm.vue'
 import PublicacionesList from '../views/publicaciones/PublicacionesList.vue'
 import PublicacionesForm from '../views/publicaciones/PublicacionesForm.vue'
+import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,9 +57,19 @@ const router = createRouter({
           component: PublicacionesList
         },
         {
-          path: '/publicaciones/:id',
+          path: '/publicaciones/alta',
+          name: 'publicacionesAlta',
+          component: PublicacionesForm
+        },
+        {
+          path: '/publicaciones/editar/:id',
           name: 'publicacionesForm',
           component: PublicacionesForm
+        },
+        {
+          path: '/publicaciones/ver/:id',
+          name: 'publicacionesView',
+          component: PublicacionesView
         }
       ]
     },
