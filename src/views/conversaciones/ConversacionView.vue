@@ -12,6 +12,7 @@
         <br>
         <h2>MENSAJES</h2>
         <ul>
+            <!-- eslint-disable-next-line vue/require-v-for-key -->
             <li v-for="mensaje in mensajes">
                 {{ mensaje }}
             </li>
@@ -24,12 +25,11 @@
         <input type="text" v-model="mensaje" @input="escribiendo">
         <button @click="enviarMensaje">Enviar</button>
 
-
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Conversacion from '../../api/conversaciones.js';
 
