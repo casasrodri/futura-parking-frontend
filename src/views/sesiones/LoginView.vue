@@ -2,18 +2,23 @@
     <div>
         <h1>Login</h1>
         <form @submit.prevent="ingresar">
-            <input type="text" v-model="username" placeholder="Username" />
+            <label for="email">Email:</label>
+            <input type="text" v-model="email" placeholder="Username" />
+            <br>
+            <label for="password">Contraseña:</label>
             <input type="password" v-model="password" placeholder="Password" />
+            <br><br>
             <button type="submit">Login</button>
         </form>
     </div>
 
-    {{ username }}
-    {{ password }}
-
     <div class="block">
+        <br>
         <RouterLink :to="{ name: 'signup' }">Registrarse</RouterLink>
     </div>
+
+    {{ email }}
+    {{ password }}
 </template>
 
 <script setup>
@@ -24,7 +29,7 @@ import { login } from '../../api/sesiones.js'
 
 const router = useRouter()
 
-const username = ref('')
+const email = ref('')
 const password = ref('')
 
 onMounted(async () => {
@@ -33,7 +38,7 @@ onMounted(async () => {
 
 const ingresar = async () => {
     try {
-        const res = await login(username.value, password.value)
+        const res = await login(email.value, password.value)
         console.log(res)
         if (res.data.ok) router.push({ name: 'home' })
     } catch (e) {

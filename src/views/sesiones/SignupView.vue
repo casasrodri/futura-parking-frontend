@@ -2,16 +2,27 @@
     <div>
         <h1>Registro</h1>
         <form @submit.prevent="login">
+            <label for="nombre">Nombre:</label>
             <input type="text" v-model="nuevoUsuario.nombre" placeholder="Nombre" />
+            <br>
+            <label for="apellido">Apellido:</label>
             <input type="text" v-model="nuevoUsuario.apellido" placeholder="Apellido" />
+            <br>
+            <label for="email">Email:</label>
             <input type="email" v-model="nuevoUsuario.email" placeholder="Email" />
+            <br>
+            <label for="password">Password:</label>
             <input type="password" v-model="nuevoUsuario.password" placeholder="Password" />
+            <br>
+            <label for="cbu">CBU/Alias:</label>
             <input type="password" v-model="nuevoUsuario.cbu" placeholder="CBU/Alias" />
+            <br><br>
             <button type="submit">Registrarse</button>
         </form>
     </div>
 
     <div class="block">
+        <br>
         <RouterLink :to="{ name: 'login' }">Iniciar sesión</RouterLink>
     </div>
 

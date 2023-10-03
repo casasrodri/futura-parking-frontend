@@ -23,20 +23,20 @@ import { RouterView } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getSessionInfo } from '../api/sesiones.js'
-import { get } from '../api/index.js'
+import { post } from '../api/index.js'
 
 const usuario = ref('')
 const router = useRouter()
 
 const cerrarSesion = async () => {
-    const res = await get('/api/sesiones/logout')
+    const res = await post('/api/sesiones/logout')
     console.log(res)
     router.push({ name: 'login' })
 }
 
 onMounted(async () => {
     const sessionInfo = await getSessionInfo()
-    // console.log(sessionInfo)
+    console.log(sessionInfo)
     if (!sessionInfo.isLogged) router.push({ name: 'login' })
 
     usuario.value = sessionInfo.nombre
