@@ -13,8 +13,12 @@
             <br>
             <label for="password">Password:</label>
             <input type="password" v-model="nuevoUsuario.password" placeholder="Password" />
+            <hr>
             <br>
+            <label for="telefono">Teléfono (sin 0 ni 15):</label>
+            <input type="number" v-model="nuevoUsuario.telefono" placeholder="Celular" />
             <label for="cbu">CBU/Alias:</label>
+            <br>
             <input type="text" v-model="nuevoUsuario.cbu" placeholder="CBU/Alias" />
             <br><br>
             <button type="submit">Registrarse</button>
