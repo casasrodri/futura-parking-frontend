@@ -8,9 +8,12 @@ import CocherasList from '../views/cocheras/CocherasList.vue'
 import CocherasForm from '../views/cocheras/CocherasForm.vue'
 import VehiculosList from '../views/vehiculos/VehiculosList.vue'
 import VehiculosForm from '../views/vehiculos/VehiculosForm.vue'
-import PublicacionesList from '../views/publicaciones/PublicacionesList.vue'
+import PublicacionesHome from '../views/publicaciones/PublicacionesHome.vue'
 import PublicacionesForm from '../views/publicaciones/PublicacionesForm.vue'
 import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
+import PublicacionesVisualizar from '../views/publicaciones/PublicacionesVisualizar.vue'
+import MisPublicaciones from '../views/publicaciones/MisPublicaciones.vue'
+
 import ConversacionView from '../views/conversaciones/ConversacionView.vue'
 
 const router = createRouter({
@@ -55,7 +58,25 @@ const router = createRouter({
         {
           path: '/publicaciones',
           name: 'publicacionesList',
-          component: PublicacionesList
+          component: PublicacionesHome,
+          redirect: '/publicaciones/ofertas',
+          children: [
+            {
+              path: '/publicaciones/ofertas',
+              name: 'publicacionesOfertas',
+              component: PublicacionesVisualizar
+            },
+            {
+              path: '/publicaciones/pedidos',
+              name: 'publicacionesPedidos',
+              component: PublicacionesVisualizar
+            },
+            {
+              path: '/publicaciones/misPublicaciones',
+              name: 'misPublicaciones',
+              component: MisPublicaciones
+            }
+          ]
         },
         {
           path: '/publicaciones/alta',
