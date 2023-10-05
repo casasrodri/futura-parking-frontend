@@ -44,6 +44,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Cochera from '../../api/vehiculos.js'
+import { getSessionInfo } from '../../api/sesiones.js';
 
 const router = useRouter()
 const errores = ref([])
@@ -59,6 +60,8 @@ const actualizar = async () => {
 
 const registrar = async () => {
     alert('Se está creando el nuevo vehiculo')
+    const session = await getSessionInfo()
+
 
     const nuevoVehiculo = {
         patente: vehiculo.value.patente,
@@ -66,7 +69,7 @@ const registrar = async () => {
         modelo: vehiculo.value.modelo,
         color: vehiculo.value.color,
         tipo: vehiculo.value.tipo,
-        propietario: '6513a457bed50d37c2a7910a', // FIXME: Ver cómo obtener el id del usuario logueado
+        propietario: session.usuario,
         alias: vehiculo.value.alias,
     }
 
