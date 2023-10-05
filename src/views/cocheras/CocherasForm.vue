@@ -41,6 +41,7 @@ const cochera = ref({
 
 import { put } from '../../api/index.js'
 import axios from 'axios';
+import { getSessionInfo } from '../../api/sesiones.js';
 
 const actualizar = async () => {
     alert('Se está actualizando')
@@ -52,11 +53,13 @@ const actualizar = async () => {
 const registrar = async () => {
     alert('Se está creando la nueva cochera')
 
+    const session = await getSessionInfo()
+
     const nuevaCochera = {
         numero: cochera.value.numero,
         tipo: cochera.value.tipo,
         observaciones: cochera.value.observaciones,
-        propietario: '6513a457bed50d37c2a7910a' // FIXME: Ver cómo obtener el id del usuario logueado
+        propietario: session.usuario
 
     }
 
