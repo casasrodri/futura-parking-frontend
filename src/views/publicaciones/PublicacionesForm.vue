@@ -4,12 +4,27 @@
 
     <form @submit.prevent="btnFuncion">
 
-        <br>
-        <label for="tipo">Tipo</label>
-        <select v-model="publi.tipo">
-            <option value="oferta">Oferta</option>
-            <option value="demanda">Solicitud</option>
-        </select>
+        <template v-if="$route.name !== 'publicacionesAlta'">
+            <br>
+            <label for="estado">Estado</label>
+            <select v-model="publi.estado">
+                <option value="disponible">Disponible</option>
+                <option value="finalizada">Finalizada</option>
+            </select>
+
+            <br>
+            Tipo: {{ publi.tipo }}
+        </template>
+        <template v-else>
+            <br>
+            <label for="tipo">Tipo</label>
+            <select v-model="publi.tipo">
+                <option value="oferta">Oferta</option>
+                <option value="demanda">Solicitud</option>
+            </select>
+        </template>
+
+
 
         <br>
         <label for="ini">Inicio:</label>
@@ -20,32 +35,27 @@
         <input type="datetime-local" v-model="publi.fin" :min="publi.ini" />
 
         <br>
-        <label for="vencimiento">Vencimiento:</label>
-        <input type="datetime-local" v-model="publi.vencimiento" :min="publi.ini" :max="publi.fin" />
-
-        <br>
         <label for="observaciones">Observaciones:</label>
         <textarea v-model="publi.observaciones" placeholder="Observaciones"></textarea>
 
         <div v-if="publi.tipo === 'oferta'">
             <br>
             <label for="tipo">Cochera:</label>
+            <!-- FIXME Ver como agregar el _id para que al editar aparezca por defecto -->
             <select v-model="publi.cochera">
-                <option v-for="coch in cocherasPropietario" :key="coch._id" :value="coch._id">{{ coch.numero }} ({{
-                    coch.tipo }})</option>
+                <option v-for="coch in cocherasPropietario" :key="coch._id" :value="coch._id">
+                    {{ coch.numero }} ({{ coch.tipo }})
+                </option>
             </select>
-
-            <br>
-            <label for="numero">Precio:</label>
-            <input type="number" v-model="publi.precio" placeholder="Precio" />
         </div>
-
         <div v-if="publi.tipo === 'demanda'">
             <br>
             <label for="tipo">Vehículo:</label>
+            <!-- FIXME Ver como agregar el _id para que al editar aparezca por defecto -->
             <select v-model="publi.demanda.vehiculo">
-                <option v-for="vehi in vehiculosPropietario" :key="vehi._id" :value="vehi._id">{{ vehi.alias }} ({{
-                    vehi.patente }})</option>
+                <option v-for="vehi in vehiculosPropietario" :key="vehi._id" :value="vehi._id">
+                    {{ vehi.alias }} ({{ vehi.patente }})
+                </option>
             </select>
         </div>
 
@@ -65,13 +75,14 @@
 
 <script setup>
 
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Publicacion from '../../api/publicaciones.js'
 
 const router = useRouter()
 const errores = ref([])
-const publi = ref({ oferta: {}, demanda: {} })
+const publi = ref({ tipo: '', estado: 'disponible', oferta: {}, demanda: {} })
+// const publi = reactive({ tipo: '', estado: 'disponible', oferta: {}, demanda: {} })
 const usuarioLogueado = ref('')
 
 const actualizar = async () => {
@@ -85,7 +96,7 @@ const actualizar = async () => {
 const publiGuardar = computed(() => {
     const guardar = { ...publi.value }
     guardar.creador = usuarioLogueado.value
-    guardar.estado = 'disponible'
+    // guardar.estado = 'disponible'
 
     if (publi.value.tipo === 'oferta') {
         guardar.cochera = publi.value.cochera
@@ -115,7 +126,7 @@ const routes = useRoute()
 import Cochera from '../../api/cocheras.js'
 import Vehiculo from '../../api/vehiculos.js'
 import { getSessionInfo } from '../../api/sesiones.js'
-import { fechaHora } from '../../utils/datetime.js';
+import { fechaHoraISO } from '../../utils/formats.js';
 
 onMounted(async () => {
 
@@ -143,24 +154,29 @@ onMounted(async () => {
         }
 
         // Convertir las horas a formato date y time
-        publicacion.ini = fechaHora(publicacion.ini)
-        publicacion.fin = fechaHora(publicacion.fin)
-        publicacion.vencimiento = fechaHora(publicacion.vencimiento)
+        publicacion.ini = fechaHoraISO(publicacion.ini)
+        publicacion.fin = fechaHoraISO(publicacion.fin)
 
         publi.value = publicacion
 
-        // TODO Agregar la opción del estado
+        const { dataCocheras } = await Cochera.obtenerDelPropietario()
+        cocherasPropietario.value = dataCocheras
+
+        const { dataVehiculos } = await Vehiculo.obtenerDelPropietario()
+        vehiculosPropietario.value = dataVehiculos
     }
-
-    // Carga de opciones de cochera
-    const res = await Cochera.obtenerDelPropietario()
-    cocherasPropietario.value = res.data
-
-    // Carga de opciones de vehículo
-    const res2 = await Vehiculo.obtenerDelPropietario()
-    vehiculosPropietario.value = res2.data
-
 })
+
+// eslint-disable-next-line no-unused-vars
+// watch(tipoNuevaPubli, async (nuevo, anterior) => {
+//     if (nuevo.tipo === 'oferta') {
+//         const { data } = await Cochera.obtenerDelPropietario()
+//         cocherasPropietario.value = data
+//     } else {
+//         const { data } = await Vehiculo.obtenerDelPropietario()
+//         vehiculosPropietario.value = data
+//     }
+// })
 
 </script>
 

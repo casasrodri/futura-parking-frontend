@@ -6,9 +6,8 @@
         <i>* Tipo:</i> {{ publicacion.tipo }}<br>
         <i>* Estado:</i> {{ publicacion.estado }}<br>
         <i>* Observaciones:</i> {{ publicacion.observaciones }}<br>
-        <i>* Inicio:</i> {{ fechaHora(publicacion.ini) }}<br>
-        <i>* Fin:</i> {{ fechaHora(publicacion.fin) }}<br>
-        <i>* Vencimiento:</i> {{ fechaHora(publicacion.vencimiento) }}<br>
+        <i>* Inicio:</i> {{ fechaHoraISO(publicacion.ini) }}<br>
+        <i>* Fin:</i> {{ fechaHoraISO(publicacion.fin) }}<br>
         <i>* Creador:</i> {{ publicacion.creador.nombre }} {{ publicacion.creador.apellido }}<br>
         <span v-if="publicacion.vehiculo">
             <i>* Vehículo: </i>
@@ -24,10 +23,6 @@
                 {{ publicacion.cochera.numero }} ({{ publicacion.cochera.tipo }})
             </RouterLink>
             <br>
-        </span>
-
-        <span v-if="publicacion.precio">
-            <i>* Precio:</i> {{ publicacion.precio }}<br>
         </span>
 
         <div v-if="esCreador">
@@ -71,7 +66,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { getSessionInfo } from '../../api/sesiones.js';
 
-import { fechaHora } from '../../utils/datetime.js'
+import { fechaHoraISO } from '../../utils/formats.js'
 
 
 const publicacion = ref({ creador: {}, vehiculo: {} })
