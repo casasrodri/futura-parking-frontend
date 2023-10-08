@@ -70,12 +70,12 @@
     {{ publiGuardar }}
 
     <br><br>
-    {{ usuarioLogueado }}
+    {{ localUser() }}
 </template>
 
 <script setup>
 
-import { ref, onMounted, computed, watch, reactive } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Publicacion from '../../api/publicaciones.js'
 
@@ -83,7 +83,6 @@ const router = useRouter()
 const errores = ref([])
 const publi = ref({ tipo: '', estado: 'disponible', oferta: {}, demanda: {} })
 // const publi = reactive({ tipo: '', estado: 'disponible', oferta: {}, demanda: {} })
-const usuarioLogueado = ref('')
 
 const actualizar = async () => {
     alert('Se está actualizando la publicación...')
@@ -95,7 +94,7 @@ const actualizar = async () => {
 
 const publiGuardar = computed(() => {
     const guardar = { ...publi.value }
-    guardar.creador = usuarioLogueado.value
+    guardar.creador = localUser().id
     // guardar.estado = 'disponible'
 
     if (publi.value.tipo === 'oferta') {
@@ -125,14 +124,10 @@ const routes = useRoute()
 
 import Cochera from '../../api/cocheras.js'
 import Vehiculo from '../../api/vehiculos.js'
-import { getSessionInfo } from '../../api/sesiones.js'
+import localUser from '../../utils/localUser.js';
 import { fechaHoraISO } from '../../utils/formats.js';
 
 onMounted(async () => {
-
-    // Obtener usuario:
-    const session = await getSessionInfo()
-    usuarioLogueado.value = session.usuario
 
     if (routes.name === 'publicacionesAlta') {
         console.log('alta')

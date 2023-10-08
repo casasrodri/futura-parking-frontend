@@ -39,9 +39,7 @@ const cochera = ref({
     observaciones: ''
 })
 
-import { put } from '../../api/index.js'
-import axios from 'axios';
-import { getSessionInfo } from '../../api/sesiones.js';
+import localUser from '../../utils/localUser.js'
 
 const actualizar = async () => {
     alert('Se está actualizando')
@@ -53,14 +51,12 @@ const actualizar = async () => {
 const registrar = async () => {
     alert('Se está creando la nueva cochera')
 
-    const session = await getSessionInfo()
 
     const nuevaCochera = {
         numero: cochera.value.numero,
         tipo: cochera.value.tipo,
         observaciones: cochera.value.observaciones,
-        propietario: session.usuario
-
+        propietario: localUser().id
     }
 
     const res = await Cochera.create(nuevaCochera)

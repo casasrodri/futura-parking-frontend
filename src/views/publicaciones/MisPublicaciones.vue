@@ -21,16 +21,12 @@
 
 import { ref, onMounted } from 'vue';
 import Publicacion from '../../api/publicaciones.js';
-import { getSessionInfo } from '../../api/sesiones.js';
+import localUser from '../../utils/localUser.js';
 import CardPubli from '../../components/CardPubli.vue';
 
 const publicaciones = ref([])
-const usuarioLogged = ref()
 
 onMounted(async () => {
-    const { usuario } = await getSessionInfo()
-    usuarioLogged.value = usuario
-
     getPublicaciones()
 });
 
@@ -44,8 +40,7 @@ const getPublicaciones = async () => {
         return new Date(b.createdAt) - new Date(a.createdAt)
     })
 
-    const soloUsuario = todasPublicaciones.filter(publi => publi.creador._id === usuarioLogged.value)
-
+    const soloUsuario = todasPublicaciones.filter(publi => publi.creador._id === localUser().id)
     publicaciones.value = soloUsuario
 }
 

@@ -44,7 +44,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Cochera from '../../api/vehiculos.js'
-import { getSessionInfo } from '../../api/sesiones.js';
+import localUser from '../../utils/localUser.js';
 
 const router = useRouter()
 const errores = ref([])
@@ -60,7 +60,6 @@ const actualizar = async () => {
 
 const registrar = async () => {
     alert('Se está creando el nuevo vehiculo')
-    const session = await getSessionInfo()
 
 
     const nuevoVehiculo = {
@@ -69,7 +68,7 @@ const registrar = async () => {
         modelo: vehiculo.value.modelo,
         color: vehiculo.value.color,
         tipo: vehiculo.value.tipo,
-        propietario: session.usuario,
+        propietario: localUser().id,
         alias: vehiculo.value.alias,
     }
 

@@ -17,8 +17,8 @@
             <br>
             <label for="telefono">Teléfono (sin 0 ni 15):</label>
             <input type="number" v-model="nuevoUsuario.telefono" placeholder="Celular" />
-            <label for="cbu">CBU/Alias:</label>
             <br>
+            <label for="cbu">CBU/Alias:</label>
             <input type="text" v-model="nuevoUsuario.cbu" placeholder="CBU/Alias" />
             <br><br>
             <button type="submit">Registrarse</button>
@@ -59,7 +59,7 @@ const login = async () => {
         console.log(res)
 
         if (res.status === 200) {
-            router.push({ name: 'home' })
+            router.push({ name: 'login' })
         }
     } catch (error) {
         console.log(error.response.data)

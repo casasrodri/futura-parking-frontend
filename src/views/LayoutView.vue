@@ -7,8 +7,8 @@
             </h1>
         </RouterLink>
 
-        <div class="block" v-if="usuario">
-            Usuario: {{ usuario.nombre }} (id: {{ usuario.id }})
+        <div class="block" v-if="localUser().id">
+            Usuario: {{ localUser().nombre }} (id: {{ localUser().id }})
 
             <button @click="cerrarSesion">
                 Cerrar sesión
@@ -22,27 +22,22 @@
 
 <script setup>
 import { RouterView } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { getSessionInfo } from '../api/sesiones.js'
-import { post } from '../api/index.js'
+import localUser from '../utils/localUser.js'
 
-const usuario = ref({})
 const router = useRouter()
 
 const cerrarSesion = async () => {
-    const res = await post('/api/sesiones/logout')
-    console.log(res)
+    localStorage.removeItem('id')
+    localStorage.removeItem('nombre')
+    localStorage.removeItem('jwt')
+
     router.push({ name: 'login' })
 }
 
 onMounted(async () => {
-    const sessionInfo = await getSessionInfo()
-    console.log(sessionInfo)
-    if (!sessionInfo.isLogged) router.push({ name: 'login' })
-
-    usuario.value.nombre = sessionInfo.nombre
-    usuario.value.id = sessionInfo.usuario
+    if (!localUser().id) router.push({ name: 'login' })
 })
 
 </script>

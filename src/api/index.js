@@ -12,24 +12,30 @@ const api = axios.create({
   baseURL: URL
 })
 
+export const getConfig = () => {
+  return {
+    headers: { Authorization: localStorage.getItem('jwt') }
+  }
+}
+
 export const get = (path) => {
   if (LOG_DETALLADO) console.log('[Axios] GET: ' + URL + path)
-  return axios.get(URL + path)
+  return axios.get(URL + path, getConfig())
 }
 
-export const post = (path, obj) => {
-  if (LOG_DETALLADO) console.log('[Axios] POST: ' + URL + path, obj)
-  return axios.post(URL + path, obj)
+export const post = (path, body) => {
+  if (LOG_DETALLADO) console.log('[Axios] POST: ' + URL + path, body)
+  return axios.post(URL + path, body, getConfig())
 }
 
-export const put = (path, obj) => {
-  if (LOG_DETALLADO) console.log('[Axios] PUT: ' + URL + path, obj)
-  return api.put(path, obj)
+export const put = (path, body) => {
+  if (LOG_DETALLADO) console.log('[Axios] PUT: ' + URL + path, body)
+  return api.put(path, body, getConfig())
 }
 
 export const del = (path) => {
   if (LOG_DETALLADO) console.log('[Axios] DELETE: ' + URL + path)
-  return axios.delete(URL + path)
+  return axios.delete(URL + path, getConfig())
 }
 
 export default class CRUD {

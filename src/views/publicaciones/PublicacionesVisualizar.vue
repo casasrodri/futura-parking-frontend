@@ -20,24 +20,20 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import Publicacion from '../../api/publicaciones.js';
-import { getSessionInfo } from '../../api/sesiones.js';
 import { useRoute } from 'vue-router';
 import CardPubli from '../../components/CardPubli.vue';
+import localUser from '../../utils/localUser.js';
 
 const route = useRoute()
 const publicaciones = ref()
-const usuarioLogged = ref()
 
 const getPublicaciones = async (tipo) => {
     const { data } = await Publicacion.obtenerDisponibles(tipo);
-    const sinUsuario = data.filter(publi => publi.creador._id !== usuarioLogged.value)
+    const sinUsuario = data.filter(publi => publi.creador._id !== localUser().id)
     publicaciones.value = sinUsuario
 }
 
 onMounted(async () => {
-    const { usuario } = await getSessionInfo()
-    usuarioLogged.value = usuario
-
     getPublicaciones('oferta')
 });
 
