@@ -16,6 +16,7 @@
             <li v-for="mensaje in mensajesEntreUsuarios">
                 {{ mensaje }}
             </li>
+
         </ul>
 
         <br>
@@ -73,7 +74,7 @@ const renderizarMensaje = (mensaje) => {
 }
 
 socket.on('todosMensajes', (mensajes) => {
-    console.log('## Se ejecutó el evento **todosMensajes**')
+    // console.log('## Se ejecutó el evento **todosMensajes**')
     mensajes.forEach(mensaje => {
         socket.emit('marcarLeido', mensaje._id, localUser().id)
         renderizarMensaje(mensaje)
@@ -85,8 +86,10 @@ socket.on('nuevoMensaje', (mensaje) => {
     renderizarMensaje(mensaje)
 })
 
+
+// eslint-disable-next-line no-unused-vars
 socket.on('leido', async (mensaje_id, usuario_id) => {
-    console.log(`El server notifica que el usuario ${usuario_id} ha leido el mensaje ${mensaje_id}.`)
+    // console.log(`El server notifica que el usuario ${usuario_id} ha leido el mensaje ${mensaje_id}.`)
 })
 
 
