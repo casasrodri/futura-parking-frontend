@@ -88,10 +88,10 @@ const crearChat = async () => {
     const publicacion = props.publicacion
 
     const datos = {
-        publicacion: publicacion.value._id,
-        tipo: publicacion.value.tipo,
-        demandante: publicacion.value.tipo === 'demanda' ? publicacion.value.creador._id : localUser().id,
-        oferente: publicacion.value.tipo === 'demanda' ? localUser().id : publicacion.value.creador._id,
+        publicacion: publicacion._id,
+        tipo: publicacion.tipo,
+        demandante: publicacion.tipo === 'demanda' ? publicacion.creador._id : localUser().id,
+        oferente: publicacion.tipo === 'demanda' ? localUser().id : publicacion.creador._id,
     }
     console.log(datos)
 
