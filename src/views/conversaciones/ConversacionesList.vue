@@ -29,9 +29,7 @@ onMounted(async () => {
     const miUsuario = localUser().id
     const { data } = await Conversacion.obtenerDelUsuario(miUsuario)
 
-    // FIXME Me está trayendo todos los mensajes del chat
     for (const conversacion of data) {
-        console.log(conversacion._id, miUsuario)
         const { data: noLeidos } = await Conversacion.contarMensajesNoLeidos(conversacion._id, miUsuario)
         conversacion.noLeidos = noLeidos.length
     }
