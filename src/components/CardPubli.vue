@@ -24,9 +24,6 @@
                 <template v-if="propia && publicacion.tipo === 'oferta'">
                     {{ publicacion.cochera.numero }} ({{ publicacion.cochera.tipo }})
                 </template>
-                <template v-else-if="publicacion.tipo === 'demanda'">
-                    {{ publicacion.vehiculo.alias }} ({{ publicacion.vehiculo.patente }})
-                </template>
                 <template v-else>
                     {{ publicacion.creador.nombre }} {{ publicacion.creador.apellido }}
                 </template>

@@ -153,13 +153,14 @@ onMounted(async () => {
         publicacion.fin = fechaHoraISO(publicacion.fin)
 
         publi.value = publicacion
-
-        const { dataCocheras } = await Cochera.obtenerDelPropietario()
-        cocherasPropietario.value = dataCocheras
-
-        const { dataVehiculos } = await Vehiculo.obtenerDelPropietario()
-        vehiculosPropietario.value = dataVehiculos
     }
+
+    const { data: dataCocheras } = await Cochera.obtenerDelPropietario()
+    cocherasPropietario.value = dataCocheras
+
+    const { data: dataVehiculos } = await Vehiculo.obtenerDelPropietario()
+    vehiculosPropietario.value = dataVehiculos
+
 })
 
 // eslint-disable-next-line no-unused-vars

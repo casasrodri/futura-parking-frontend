@@ -13,7 +13,7 @@
         <h2>MENSAJES</h2>
         <ul>
             <!-- eslint-disable-next-line vue/require-v-for-key -->
-            <li v-for="mensaje in mensajes">
+            <li v-for="mensaje in mensajesEntreUsuarios">
                 {{ mensaje }}
             </li>
         </ul>
@@ -22,7 +22,7 @@
         {{ mostrarEscribiendo }}
 
         <br>
-        <input type="text" v-model="mensaje" @input="escribiendo">
+        <input type="text" v-model="mensaje" @input="escribiendo" @change="enviarMensaje">
         <button @click="enviarMensaje">Enviar</button>
 
     </div>
@@ -41,31 +41,48 @@ import { URL } from '../../api/index.js'
 import io from 'socket.io-client';
 const socket = io(URL);
 
-import { getSessionInfo } from '../../api/sesiones.js';
-const sessionInfo = ref({})
+import localUser from '../../utils/localUser.js';
 
 onMounted(async () => {
     const res = await Conversacion.get(routes.params.id)
     datosConversacion.value = res.data
     datosConversacion.value.mostrar = true
 
-    const res2 = await getSessionInfo()
-    sessionInfo.value = res2
-
-    socket.emit('unirseChat', datosConversacion.value.publicacion._id);
+    socket.emit('unirseChat', routes.params.id);
 })
 
 
-const mensajes = ref([])
+const mensajesEntreUsuarios = ref([])
 const enviarMensaje = () => {
-    // socket.emit('newMessage', datosConversacion.value.publicacion._id, sessionInfo.value.usuario, mensaje.value);
-    socket.emit('crearMensaje', datosConversacion.value.publicacion._id, sessionInfo.value.nombre, mensaje.value)
+    socket.emit(
+        'crearMensaje',
+        routes.params.id,
+        localUser().id,
+        mensaje.value
+    )
     mensaje.value = ''
 }
 
-socket.on('nuevoMensaje', (usuario, mensaje) => {
-    mensajes.value.push(`${usuario}: ${mensaje}`)
-});
+const renderizarMensaje = (mensaje) => {
+    mensajesEntreUsuarios.value.push(`${mensaje.usuario.nombre}: ${mensaje.mensaje}`)
+}
+
+socket.on('todosMensajes', (mensajes) => {
+    console.log('## Se ejecutó el evento **todosMensajes**')
+    mensajes.forEach(mensaje => {
+        socket.emit('marcarLeido', mensaje._id, localUser().id)
+        renderizarMensaje(mensaje)
+    })
+})
+
+socket.on('nuevoMensaje', (mensaje) => {
+    socket.emit('marcarLeido', mensaje._id, localUser().id)
+    renderizarMensaje(mensaje)
+})
+
+socket.on('leido', async (mensaje_id, usuario_id) => {
+    console.log(`El server notifica que el usuario ${usuario_id} ha leido el mensaje ${mensaje_id}.`)
+})
 
 
 const usuariosEscribiendo = ref({})
@@ -73,6 +90,8 @@ const mostrarEscribiendo = ref('')
 
 socket.on('mostrarEscribiendo', (usuario, i) => {
     let usuarios = ''
+
+    if (usuario === localUser().nombre) return
 
     usuariosEscribiendo.value[usuario] = usuariosEscribiendo.value[usuario] || 0
     usuariosEscribiendo.value[usuario] += i
@@ -87,12 +106,12 @@ socket.on('mostrarEscribiendo', (usuario, i) => {
 })
 
 const escribiendo = () => {
-    const publicacion = datosConversacion.value.publicacion._id
-    const usuario = sessionInfo.value.nombre
+    const conversacion = routes.params.id
+    const usuario = localUser().nombre
 
-    socket.emit('escribiendo', publicacion, usuario);
+    socket.emit('escribiendo', conversacion, usuario);
     setTimeout(() => {
-        socket.emit('noEscribiendo', publicacion, usuario);
+        socket.emit('noEscribiendo', conversacion, usuario);
     }, 1000);
 }
 

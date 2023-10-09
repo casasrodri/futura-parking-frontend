@@ -6,6 +6,11 @@ class PublicacionesAPI extends CRUD {
     const publicaciones = await get(this.path + '/disponibles/' + tipo)
     return publicaciones
   }
+
+  async obtenerRecomendaciones(tipo) {
+    const publicaciones = await get(this.path + '/recomendaciones/' + tipo)
+    return publicaciones
+  }
 }
 
 export default new PublicacionesAPI('/api/publicaciones')

@@ -33,15 +33,19 @@ const getPublicaciones = async (tipo) => {
     publicaciones.value = sinUsuario
 }
 
-onMounted(async () => {
-    getPublicaciones('oferta')
-});
-
-watch(route, () => {
+const mostrarPublicaciones = () => {
     if (route.name === 'publicacionesPedidos')
         getPublicaciones('demanda')
     else
         getPublicaciones('oferta')
+}
+
+onMounted(async () => {
+    mostrarPublicaciones()
+});
+
+watch(route, () => {
+    mostrarPublicaciones()
 })
 
 </script>
