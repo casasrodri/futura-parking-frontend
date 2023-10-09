@@ -15,6 +15,7 @@ import PublicacionesVisualizar from '../views/publicaciones/PublicacionesVisuali
 import MisPublicaciones from '../views/publicaciones/MisPublicaciones.vue'
 
 import ConversacionView from '../views/conversaciones/ConversacionView.vue'
+import ConversacionesList from '../views/conversaciones/ConversacionesList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -95,6 +96,11 @@ const router = createRouter({
         },
 
         // MENSAJES
+        {
+          path: '/conversaciones',
+          name: 'conversacionesList',
+          component: ConversacionesList
+        },
         {
           path: '/conversaciones/:id',
           name: 'conversacionView',

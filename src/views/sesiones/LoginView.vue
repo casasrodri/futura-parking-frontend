@@ -3,7 +3,7 @@
         <h1>Login</h1>
         <form @submit.prevent="ingresar">
             <label for="email">Email:</label>
-            <input type="text" v-model="email" placeholder="Email" />
+            <input type="email" v-model="email" placeholder="Email" />
             <br>
             <label for="password">Contraseña:</label>
             <input type="password" v-model="password" placeholder="Password" />

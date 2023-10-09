@@ -14,8 +14,8 @@
     <li>
       <RouterLink :to="{ name: 'publicacionesList' }">Publicaciones</RouterLink>
     </li>
-    <!-- <li><RouterLink to="/estacionamientos">Estacionamientos</RouterLink></li>
-    <li><RouterLink to="/reservas">Reservas</RouterLink></li>
-    <li><RouterLink to="/vehiculos">Vehículos</RouterLink></li>
-    <li><RouterLink to="/zonas">Zonas</RouterLink></li> -->
-</ul></template>
+    <li>
+      <RouterLink :to="{ name: 'conversacionesList' }">Mensajes</RouterLink>
+    </li>
+  </ul>
+</template>

@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
 import Conversacion from '../../api/conversaciones.js';
 
@@ -51,9 +51,14 @@ onMounted(async () => {
     socket.emit('unirseChat', routes.params.id);
 })
 
+onBeforeUnmount(() => {
+    socket.disconnect();
+})
+
 
 const mensajesEntreUsuarios = ref([])
 const enviarMensaje = () => {
+    if (mensaje.value === '') return
     socket.emit(
         'crearMensaje',
         routes.params.id,
