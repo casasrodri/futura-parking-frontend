@@ -89,7 +89,7 @@ const actualizar = async () => {
     const res = await Publicacion.update(publi.value._id, publiGuardar.value)
     console.log(res)
     alert('Actualizada!!')
-    // router.push({ name: 'publicacionesList' })
+    router.push({ name: 'misPublicaciones' })
 }
 
 const publiGuardar = computed(() => {
@@ -115,7 +115,7 @@ const registrar = async () => {
     const res = await Publicacion.create(publiGuardar.value)
     console.log(res)
     alert('Creada!!')
-    router.push({ name: 'publicacionesList' })
+    router.push({ name: 'misPublicaciones' })
 }
 
 const btnGuardar = ref('Actualizar')

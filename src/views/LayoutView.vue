@@ -1,6 +1,6 @@
 <template>
     <HeaderMenu />
-    <div class="pt-16 pb-14">
+    <div class="pt-[54px] pb-[96px]">
         <RouterView />
     </div>
     <FooterMenu />

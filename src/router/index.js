@@ -12,6 +12,7 @@ import PublicacionesHome from '../views/publicaciones/PublicacionesHome.vue'
 import PublicacionesForm from '../views/publicaciones/PublicacionesForm.vue'
 import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
 import PublicacionesVisualizar from '../views/publicaciones/PublicacionesVisualizar.vue'
+import PublicacionesVisualizar2 from '../views/publicaciones/PublicacionesVisualizar2.vue'
 import MisPublicaciones from '../views/publicaciones/MisPublicaciones.vue'
 
 import ConversacionView from '../views/conversaciones/ConversacionView.vue'
@@ -30,8 +31,8 @@ const router = createRouter({
         {
           path: '/',
           name: 'home',
-          component: PublicacionesVisualizar
-          // redirect: 'app'
+          // component: PublicacionesHome,
+          redirect: '/publicaciones/ofertas/otros'
         },
         // COCHERAS
         {
@@ -59,28 +60,35 @@ const router = createRouter({
 
         // PUBLICACIONES
         {
-          path: '/publicaciones',
+          path: '/publicaciones/:tipoPub/:tipoVis',
+          // tipoPub: ofertas | pedidos
+          // tipoVis: otros | mias
           name: 'publicacionesList',
-          component: PublicacionesHome,
-          redirect: '/publicaciones/ofertas',
-          children: [
-            {
-              path: '/publicaciones/ofertas',
-              name: 'publicacionesOfertas',
-              component: PublicacionesVisualizar
-            },
-            {
-              path: '/publicaciones/pedidos',
-              name: 'publicacionesPedidos',
-              component: PublicacionesVisualizar
-            },
-            {
-              path: '/publicaciones/misPublicaciones',
-              name: 'misPublicaciones',
-              component: MisPublicaciones
-            }
-          ]
+          component: PublicacionesVisualizar2
         },
+        // {
+        //   path: '/publicaciones',
+        //   name: 'publicacionesList',
+        //   component: PublicacionesHome,
+        //   redirect: '/publicaciones/ofertas/otros',
+        //   children: [
+        //     {
+        //       path: '/publicaciones/ofertas',
+        //       name: 'publicacionesOfertas',
+        //       component: PublicacionesVisualizar
+        //     },
+        //     {
+        //       path: '/publicaciones/pedidos',
+        //       name: 'publicacionesPedidos',
+        //       component: PublicacionesVisualizar
+        //     },
+        //     {
+        //       path: '/publicaciones/misPublicaciones',
+        //       name: 'misPublicaciones',
+        //       component: MisPublicaciones
+        //     }
+        //   ]
+        // },
         {
           path: '/publicaciones/alta',
           name: 'publicacionesAlta',

@@ -1,5 +1,5 @@
 <template>
-    <div :class="`flex items-center justify-center text-5xl w-16 h-16 rounded-md ${selected}`">
+    <div :class="`flex items-center justify-center text-4xl w-16 h-16 rounded-md ${selected}`">
         <i :class="`bi bi-${icono}`"></i>
         <!-- {{ selected }} -->
     </div>

@@ -1,100 +1,126 @@
 <template>
-    <div class="card">
-        <RouterLink :to="{ path: '/publicaciones/ver/' + publicacion._id }">
-            <div class="titulo">
+    <RouterLink :to="{ path: '/publicaciones/ver/' + publicacion._id }">
+
+        <div id="card"
+            class="m-3 max-w-sm p-5 pb-2 bg-white border border-jade-200 rounded-lg shadow hover:bg-jade-100 hover:border-jade-400 hover:shadow-md flex flex-col items-center justify-center">
+
+            <h5 id="titulo" class="block mb-2 text-2xl font-bold tracking-tight text-jade-800">
                 <template v-if="propia">
-                    <!-- {{ capitalizar(publicacion.tipo) }} -->
-                    <!-- {{ publicacion.tipo === 'oferta' ? 'Ofrezco' : 'Busco' }} -->
-                    {{ publicacion.tipo === 'oferta' ? 'Me alquilás?' : 'Te alquilo!' }}
+                    <template v-if="publicacion.tipo === 'demanda'">
+                        {{ capitalizar(publicacion.vehiculo.alias) }}
+                    </template>
+                    <template v-else>
+                        {{ publicacion.cochera.numero }}
+                    </template>
                 </template>
+
                 <template v-else-if="publicacion.tipo === 'demanda'">
                     {{ capitalizar(publicacion.vehiculo.tipo) }}
                 </template>
+
                 <template v-else>
                     {{ capitalizar(publicacion.cochera.tipo) }}
                 </template>
+            </h5>
+
+            <div id="fechas" class="flex flex-row w-full px-5 mt-2 items-center justify-between">
+                <div id="ini" class="flex flex-col items-center justify-between">
+                    <div>
+                        {{ fecha(publicacion.ini) }}
+                    </div>
+                    <div class="text-gray-500 font-light">
+                        {{ hora(publicacion.ini) }}
+                    </div>
+                </div>
+
+                <div id="flecha" class="text-3xl text-gray-400">
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+
+                <div id="ini" class="flex flex-col items-center justify-between">
+                    <div>
+                        {{ fecha(publicacion.fin) }}
+                    </div>
+                    <div class="text-gray-500 font-light">
+                        {{ hora(publicacion.fin) }}
+                    </div>
+                </div>
             </div>
 
-            <div class="periodo">
-                {{ fecha(publicacion.ini) }} {{ hora(publicacion.ini) }} -> {{ fecha(publicacion.fin) }} {{
-                    hora(publicacion.fin) }}
-            </div>
+            <h3 id="publicador" class="block mt-3 text-lg font-medium tracking-tight text-gray-900">
 
-            <div class="publicador">
-                <template v-if="propia && publicacion.tipo === 'oferta'">
-                    {{ publicacion.cochera.numero }} ({{ publicacion.cochera.tipo }})
+                <template v-if="propia"> <!-- MIAS -->
+                    <span class="text-gray-500">
+                        <template v-if="publicacion.tipo === 'demanda'">
+                            {{ publicacion.vehiculo.patente.toUpperCase() }}
+                        </template>
+                        <template v-else>
+                            {{ publicacion.cochera.tipo }}
+                        </template>
+                    </span>
                 </template>
-                <template v-else>
+
+                <template v-else> <!-- OTROS -->
                     {{ publicacion.creador.nombre }} {{ publicacion.creador.apellido }}
                 </template>
+            </h3>
+
+
+            <div id="detalles" class="flex flex-row w-full px-2 mt-1 items-center justify-between">
+                <div>
+                    <template v-if="publicacion.tipo === 'demanda'">
+                        <span
+                            class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2 py-0.5 rounded-full ">demanda</span>
+                    </template>
+                    <template v-else>
+                        <span
+                            class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2 py-0.5 rounded-full ">oferta</span>
+                    </template>
+
+                    <span class="bg-gray-100 text-gray-700 text-xs font-medium mr-2 px-2 py-0.5 rounded-full">
+                        <span class="text-gray-500">
+                            #
+                        </span>
+                        {{ publicacion._id.slice(-4) }}
+                    </span>
+                </div>
+
+                <div v-if="publicacion.similitud">
+
+                    <template v-if="propia">
+                        <span class="bg-orange-100 text-orange-400 text-xs font-medium mr-2 px-2 py-0.5 rounded-full">
+                            propia
+                        </span>
+                    </template>
+
+                    <span class="bg-yellow-100 text-yellow-600 text-xs font-medium mr-2 px-2 py-0.5 rounded-full">
+                        {{ round(publicacion.similitud * 100) }}
+                        <span class="text-yellow-500">
+                            %
+                        </span>
+                    </span>
+                </div>
 
             </div>
-        </RouterLink>
-    </div>
+        </div>
+    </RouterLink>
 </template>
 
 <script setup>
 import { fecha, hora, capitalizar } from '../utils/formats.js';
+import localUser from '../utils/localUser.js';
+
+const propia = localUser().id === props.publicacion.creador._id
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
     publicacion: Object,
-    propia: Boolean,
 })
+
+const round = (number) => {
+    const roundedNumber = Math.round(number * 100) / 100;
+    const formattedNumber = roundedNumber.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return formattedNumber;
+}
 </script>
 
-<style>
-.contenedor {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    /* Hacemos que los sub-divs se comporten como flex-items */
-    justify-content: space-between;
-    /* Distribuye el espacio entre los sub-divs */
-    width: 100%;
-    /* Ocupa todo el ancho disponible */
-}
-
-/* Estilos para los sub-divs */
-.subdiv {
-    flex: 1;
-    /* Cada sub-div ocupará la mitad del espacio disponible */
-    display: flex;
-    /* Hacemos que el texto se centre verticalmente */
-    align-items: center;
-    /* Centramos el contenido verticalmente */
-    justify-content: center;
-    /* Centramos el contenido horizontalmente */
-    border: 1px solid #000;
-    /* Añadimos un borde para visualizar los sub-divs */
-    text-align: center;
-    /* Centramos el texto horizontalmente */
-}
-
-.card {
-    border: 1px solid #918383;
-    border-radius: 7px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
-.titulo {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.periodo {
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.publicador {
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-}
-</style>

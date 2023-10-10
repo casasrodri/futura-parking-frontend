@@ -1,28 +1,20 @@
 <template>
     <div>
-        <div class="card">
-            <RouterLink :to="{ name: 'publicacionesAlta' }">
-                <div class="titulo">
-                    +
-                </div>
-                <div class="publicador">
-                    Nueva
-                </div>
-            </RouterLink>
-        </div>
+        <CardNuevo />
 
         <div v-for="publi in publicaciones" :key="publi._id">
-            <!-- {{ publi }} -->
             <CardPubli :publicacion="publi" :propia="true" />
         </div>
     </div>
 </template>
+
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import Publicacion from '../../api/publicaciones.js';
 import localUser from '../../utils/localUser.js';
 import CardPubli from '../../components/CardPubli.vue';
+import CardNuevo from '../../components/CardNuevo.vue';
 
 const publicaciones = ref([])
 
@@ -45,26 +37,3 @@ const getPublicaciones = async () => {
 }
 
 </script>
-
-<style>
-.card {
-    border: 1px solid #918383;
-    border-radius: 7px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
-.titulo {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.publicador {
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-}
-</style>

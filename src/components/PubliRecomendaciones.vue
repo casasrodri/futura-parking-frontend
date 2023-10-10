@@ -15,28 +15,15 @@ Todos:
         <template v-if="recomendadas.length > 0">
             <template v-for="recom in  recomendadas " :key="recom._id">
                 <template v-if="recom.creador._id != publicacion.creador._id">
-                    <RouterLink :to="{ path: '/publicaciones/ver/' + recom._id }">
-                        <!-- {{ recom }} -->
-                        <template v-if="recom.tipo === 'oferta'">
-                            {{ recom.cochera.tipo }}
-                        </template>
-                        <template v-else>
-                            tipo: {{ recom.vehiculo.tipo }}
-                        </template>
-                        <br>
-                        fecha: {{ recom.ini }} - {{ recom.fin }}
-                        <br>
-                        usuario: {{ recom.creador.nombre }} {{ recom.creador.apellido }}
-                        <br>
-                        porcentaje: {{ round(recom.similitud * 100) }} %
-                    </RouterLink>
-                    <hr>
+                    <CardPubli :publicacion="recom" :propia="false" />
                 </template>
             </template>
         </template>
+
         <template v-else>
             No hay recomendaciones...
         </template>
+
     </section>
 </template>
 
@@ -45,6 +32,7 @@ import Publicacion from '../api/publicaciones.js';
 import { RouterLink } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import CardPubli from './CardPubli.vue';
 
 const route = useRoute()
 const recomendadas = ref([])
@@ -57,12 +45,6 @@ const props = defineProps({
 onMounted(() => {
     obtenerPublRecomendadas()
 })
-
-const round = (number) => {
-    const roundedNumber = Math.round(number * 100) / 100;
-    const formattedNumber = roundedNumber.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    return formattedNumber;
-}
 
 const obtenerPublRecomendadas = async () => {
     const resRecomendadas = await Publicacion.obtenerRecomendaciones(route.params.id);
