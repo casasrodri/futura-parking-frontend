@@ -1,20 +1,22 @@
 <template>
     <div class="contenedor">
-        <div class="subdiv">
+        <div class="">
             <RouterLink :to="{ name: 'publicacionesOfertas' }">
                 <p>Ofertas</p>
             </RouterLink>
         </div>
-        <div class="subdiv">
+        <div class="">
             <RouterLink :to="{ name: 'publicacionesPedidos' }">
                 <p>Pedidos</p>
             </RouterLink>
         </div>
     </div>
 
-    <template v-for="publi in publicaciones" :key="publi._id">
-        <CardPubli :publicacion="publi" />
-    </template>
+    <div id="cards" class="mx-10">
+        <template v-for="publi in publicaciones" :key="publi._id">
+            <CardPubli :publicacion="publi" />
+        </template>
+    </div>
 </template>
 
 <script setup>

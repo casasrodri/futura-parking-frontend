@@ -2,6 +2,7 @@
   "name": "futura-parking-frontend",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^1.5.1",
+    "bootstrap-icons": "^1.11.1",
     "luxon": "^3.4.3",
     "socket.io-client": "^4.7.2",
     "vue": "^3.3.4",
@@ -21,8 +23,10 @@
     "@types/luxon": "^3.3.2",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vue/eslint-config-prettier": "^8.0.0",
+    "autoprefixer": "^10.4.16",
     "eslint": "^8.51.0",
     "eslint-plugin-vue": "^9.17.0",
+    "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.11"

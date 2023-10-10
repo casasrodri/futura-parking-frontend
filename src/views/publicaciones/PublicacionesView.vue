@@ -1,5 +1,4 @@
 <template>
-    <a @click="atrasPag">◀ Atrás</a>
     <PubliDetalles :publicacion="publicacion" :esCreador="esCreador" />
     <PubliMensajes :publicacion="publicacion" :esCreador="esCreador" />
     <PubliRecomendaciones :publicacion="publicacion" />

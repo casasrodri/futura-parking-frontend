@@ -6,6 +6,7 @@ const isLocalhost =
 export const URL = isLocalhost
   ? `http://localhost:${PORT}`
   : `http://${window.location.hostname}:${PORT}`
+
 const LOG_DETALLADO = true
 
 const api = axios.create({
@@ -22,6 +23,24 @@ export const get = (path) => {
   if (LOG_DETALLADO) console.log('[Axios] GET: ' + URL + path)
   return axios.get(URL + path, getConfig())
 }
+
+// import router from '../router'
+
+// export const get = async (path) => {
+//   if (LOG_DETALLADO) console.log('[Axios] GET: ' + URL + path)
+//   try {
+//     return await axios.get(URL + path, getConfig())
+//   } catch (error) {
+//     const status = error.response.status
+//     const mensaje = error.response.data.mensaje
+
+//     if (status === 401 && mensaje === 'Token inválido') {
+//       localStorage.removeItem('jwt')
+//       router.push('/ingreso')
+//       console.log('El token es inválido, se intentará renovar.')
+//     }
+//   }
+// }
 
 export const post = (path, body) => {
   if (LOG_DETALLADO) console.log('[Axios] POST: ' + URL + path, body)

@@ -1,7 +1,7 @@
 <template>
     <h2>Mis vehículos</h2>
     <!-- TODO podria agregar la persona que maneja el vehiculo, para poder avisar a la guardia. Opción (Conductor: yo o habilitar campo) -->
-    <table class="table table-striped">
+    <table class="">
         <thead>
             <tr>
                 <!-- <th>Id</th> -->
@@ -22,9 +22,8 @@
                 <td>{{ vehiculo.marca }} {{ vehiculo.modelo }}</td>
                 <td>{{ vehiculo.color }}</td>
                 <td>
-                    <RouterLink :to="{ name: 'vehiculosForm', params: { id: vehiculo._id } }"
-                        class="btn btn-warning btn-sm">Editar</RouterLink>
-                    <button class="btn btn-danger btn-sm" @click="deleteCochera(vehiculo._id)">Eliminar</button>
+                    <RouterLink :to="{ name: 'vehiculosForm', params: { id: vehiculo._id } }" class="">Editar</RouterLink>
+                    <button class="" @click="deleteCochera(vehiculo._id)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
