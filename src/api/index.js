@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from '../utils/cookies.js'
 
 const PORT = 8080
 const isLocalhost =
@@ -15,7 +16,7 @@ const api = axios.create({
 
 export const getConfig = () => {
   return {
-    headers: { Authorization: localStorage.getItem('jwt') }
+    headers: { Authorization: Cookies.get('jwt') }
   }
 }
 

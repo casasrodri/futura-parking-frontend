@@ -1,7 +1,10 @@
+import Cookies from './cookies.js'
+
 export default () => {
   return {
-    id: localStorage.getItem('id'),
-    nombre: localStorage.getItem('nombre'),
-    token: localStorage.getItem('jwt')
+    id: Cookies.get('id'),
+    nombre: Cookies.get('nombre'),
+    nombreCompleto: Cookies.get('nombreCompleto'),
+    token: Cookies.get('jwt')
   }
 }

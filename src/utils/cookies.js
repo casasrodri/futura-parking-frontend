@@ -26,7 +26,7 @@ export default class Cookies {
     return todas[clave]
   }
 
-  static delete(clave) {
+  static remove(clave) {
     this.set(clave, '', '2000-01-01 00:00:00')
   }
 }

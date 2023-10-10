@@ -2,7 +2,7 @@
     <div :class="'border-3 shadow-md fixed right-2 top-14 bg-jade-100/90 p-2 px-6 ' + visible">
 
         <div class="mt-2 font-medium text-jade-900" :title="localUser().id">
-            {{ localUser().nombre }}
+            {{ localUser().nombreCompleto }}
         </div>
         <hr class="h-px mt-2 bg-jade-200 border-0">
 
@@ -36,10 +36,12 @@ const visible = computed(() => {
     }
 })
 
+import Cookies from '../utils/cookies.js';
 const cerrarSesion = async () => {
-    localStorage.removeItem('id')
-    localStorage.removeItem('nombre')
-    localStorage.removeItem('jwt')
+    Cookies.remove('id')
+    Cookies.remove('nombre')
+    Cookies.remove('nombreCompleto')
+    Cookies.remove('jwt')
 
     router.push({ name: 'login' })
 }
