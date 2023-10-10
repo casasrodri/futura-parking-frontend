@@ -1,12 +1,11 @@
 <template>
     <SelectorPubli />
     <!-- {{ $route.params }} -->
+    <!-- {{ publicaciones }} -->
     <div class="max-w-lg mx-auto w-full px-2 py-2">
-
         <template v-for="publi in publicaciones" :key="publi._id">
             <CardPubli :publicacion="publi" />
         </template>
-
     </div>
 </template>
 

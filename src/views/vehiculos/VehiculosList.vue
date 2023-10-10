@@ -1,47 +1,26 @@
 <template>
-    <h2>Mis vehículos</h2>
     <!-- TODO podria agregar la persona que maneja el vehiculo, para poder avisar a la guardia. Opción (Conductor: yo o habilitar campo) -->
-    <table class="">
-        <thead>
-            <tr>
-                <!-- <th>Id</th> -->
-                <th>Alias</th>
-                <th>Patente</th>
-                <th>Tipo</th>
-                <th>Modelo</th>
-                <th>Color</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="vehiculo in vehiculos" :key="vehiculo._id">
-                <!-- <td>{{ vehiculo._id }}</td> -->
-                <td>{{ vehiculo.alias }}</td>
-                <td>{{ vehiculo.patente }}</td>
-                <td>{{ vehiculo.tipo }}</td>
-                <td>{{ vehiculo.marca }} {{ vehiculo.modelo }}</td>
-                <td>{{ vehiculo.color }}</td>
-                <td>
-                    <RouterLink :to="{ name: 'vehiculosForm', params: { id: vehiculo._id } }" class="">Editar</RouterLink>
-                    <button class="" @click="deleteCochera(vehiculo._id)">Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
-    <br><br>
-    <RouterLink :to="{ path: '/vehiculos/alta' }">
-        Nuevo
-    </RouterLink>
+    <template v-for="vehiculo in vehiculos" :key="vehiculo._id">
+        <CardVehiculo :vehiculo="vehiculo" />
+    </template>
 
-    <br><br>
-    <!-- {{ vehiculos }} -->
+    <div class="flex w-full bottom-20 fixed place-content-end">
+        <CardNuevo texto="Nuevo" :to="{ path: '/vehiculos/alta' }" />
+    </div>
+
+
+    <div v-for="vehiculo in vehiculos" :key="vehiculo._id">
+        {{ vehiculo.alias }}
+        <button class="" @click="deleteCochera(vehiculo._id)">Eliminar</button>
+    </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
 import Vehiculos from '../../api/vehiculos.js'
+import CardVehiculo from '../../components/CardVehiculo.vue'
+import CardNuevo from '../../components/CardNuevo.vue'
 
 const vehiculos = ref([])
 

@@ -1,44 +1,23 @@
 <template>
-    <h2>Mis cocheras</h2>
+    <template v-for="cochera in cocheras" :key="cochera._id">
+        <CardCochera :cochera="cochera" />
+    </template>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <!-- <th>Id</th> -->
-                <th>Número</th>
-                <th>Tipo</th>
-                <th>Observaciones</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="cochera in cocheras" :key="cochera._id">
-                <!-- <td>{{ cochera._id }}</td> -->
-                <td>{{ cochera.numero }}</td>
-                <td>{{ cochera.tipo }}</td>
-                <td>{{ cochera.observaciones }}</td>
-                <td>
-                    <RouterLink :to="{ name: 'cocherasForm', params: { id: cochera._id } }" class="btn btn-warning btn-sm">
-                        Editar</RouterLink>
-                    <button class="btn btn-danger btn-sm" @click="deleteCochera(cochera._id)">Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="flex w-full bottom-20 fixed place-content-end">
+        <CardNuevo texto="Nueva" :to="{ path: '/cocheras/alta' }" />
+    </div>
 
-    <br><br>
-    <RouterLink :to="{ path: '/cocheras/alta' }">
-        Nueva
-    </RouterLink>
-
-    <br><br>
-    <!-- {{ cocheras }} -->
+    <div v-for="cochera in cocheras" :key="cochera._id">
+        {{ cochera.numero }}
+        <button class="btn btn-danger btn-sm" @click="deleteCochera(cochera._id)">Eliminar</button>
+    </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
 import Cocheras from '../../api/cocheras.js'
+import CardCochera from '../../components/CardCochera.vue'
+import CardNuevo from '../../components/CardNuevo.vue'
 
 const cocheras = ref([])
 

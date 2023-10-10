@@ -4,7 +4,7 @@
 
         <div id="acciones" class="flex flex-row w-full px-2 mt-1 items-center justify-end">
 
-            <RouterLink :to="{ name: 'vehiculosForm', params: { id: vehiculo._id } }">
+            <RouterLink :to="{ name: 'cocherasForm', params: { id: cochera._id } }">
                 <div class="mr-3 text-gray-500">
                     <i class="bi bi-pencil-fill"></i>
                 </div>
@@ -18,20 +18,19 @@
 
 
         <h5 id="titulo" class="block mb-2 text-4xl font-bold tracking-tight text-jade-800">
-            {{ vehiculo.alias }}
+            {{ cochera.numero }}
         </h5>
 
         <div id="fechas" class="flex flex-row text-xl w-full px-5 mt-2 items-center justify-center">
             <div class="text-gray-500 font-light">
-                {{ vehiculo.patente.toUpperCase() }}
+                {{ capitalizar(cochera.tipo) }}
             </div>
         </div>
 
         <h3 id="obs" class="block mt-3 text-xs font-medium tracking-tight text-gray-900">
 
             <span class="text-gray-500">
-                {{ vehiculo.marca }}
-                {{ vehiculo.modelo }}
+                {{ cochera.observaciones }}
             </span>
         </h3>
     </div>
@@ -43,7 +42,7 @@ import { capitalizar } from '../utils/formats.js';
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
-    vehiculo: Object,
+    cochera: Object,
 })
 
 

@@ -28,7 +28,7 @@
 
     <!-- Botón de nuevo -->
     <div v-if="$route.params.tipoVis === 'mias'" class="flex w-full bottom-20 fixed place-content-end">
-        <CardNuevo />
+        <CardNuevo texto="Nueva" :to="{ name: 'publicacionesAlta' }" />
     </div>
 </template>
 
