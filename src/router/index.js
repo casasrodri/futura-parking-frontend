@@ -1,19 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import SignupView from '../views/sesiones/SignupView.vue'
 import LoginView from '../views/sesiones/LoginView.vue'
+
 import LayoutView from '../views/LayoutView.vue'
-import HomeView from '../views/HomeView.vue'
 
 import CocherasList from '../views/cocheras/CocherasList.vue'
 import CocherasForm from '../views/cocheras/CocherasForm.vue'
+
 import VehiculosList from '../views/vehiculos/VehiculosList.vue'
 import VehiculosForm from '../views/vehiculos/VehiculosForm.vue'
-import PublicacionesHome from '../views/publicaciones/PublicacionesHome.vue'
+
 import PublicacionesForm from '../views/publicaciones/PublicacionesForm.vue'
 import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
-import PublicacionesVisualizar from '../views/publicaciones/PublicacionesVisualizar.vue'
-import PublicacionesVisualizar2 from '../views/publicaciones/PublicacionesVisualizar2.vue'
-import MisPublicaciones from '../views/publicaciones/MisPublicaciones.vue'
+import PublicacionesList from '../views/publicaciones/PublicacionesList.vue'
 
 import ConversacionView from '../views/conversaciones/ConversacionView.vue'
 import ConversacionesList from '../views/conversaciones/ConversacionesList.vue'
@@ -64,7 +64,7 @@ const router = createRouter({
           // tipoPub: ofertas | pedidos
           // tipoVis: otros | mias
           name: 'publicacionesList',
-          component: PublicacionesVisualizar2
+          component: PublicacionesList
         },
         // {
         //   path: '/publicaciones',
