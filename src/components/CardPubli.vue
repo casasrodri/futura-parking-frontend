@@ -89,7 +89,7 @@
 
                     <template v-if="propia">
                         <span class="bg-orange-100 text-orange-400 text-xs font-medium mr-2 px-2 py-0.5 rounded-full">
-                            propia
+                            yo
                         </span>
                     </template>
 
@@ -118,9 +118,10 @@ const props = defineProps({
 })
 
 const round = (number) => {
-    const roundedNumber = Math.round(number * 100) / 100;
-    const formattedNumber = roundedNumber.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    return formattedNumber;
+    const roundedNumber = Math.round(number);
+    // const roundedNumber = Math.round(number * 100) / 100;
+    // const formattedNumber = roundedNumber.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return roundedNumber;
 }
 </script>
 

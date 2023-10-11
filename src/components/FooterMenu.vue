@@ -26,8 +26,15 @@
             </RouterLink>
 
             <RouterLink :to="{ name: 'conversacionesList' }">
-                <BotonBarraInferior icono="envelope" :seleccionado="btnActivo.mensajes" @click="apretarBtn('mensajes')" />
+                <BotonBarraInferior icono="envelope" :seleccionado="btnActivo.mensajes" @click="apretarBtn('mensajes')"
+                    @notificaciones="contarMensajesSinLeer" />
             </RouterLink>
+
+        </div>
+
+        <div v-if="conteoGeneral"
+            class="relative inline-flex items-center justify-center w-6 h-6 text-xs text-white bg-red-600 rounded-full right-4 top-2">
+            {{ conteoGeneral }}
         </div>
     </footer>
 
@@ -35,9 +42,11 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import BotonBarraInferior from './BotonBarraInferior.vue';
+import Conversacion from '../api/conversaciones.js';
+import localUser from '../utils/localUser.js';
 
 const route = useRoute()
 
@@ -53,20 +62,43 @@ function apretarBtn(boton) {
     btnActivo.value[boton] = true;
 }
 
-watch(route, () => {
-    const path = route.fullPath.toLowerCase()
-    if (path.includes('vehiculos')) {
-        apretarBtn('vehiculos')
-    } else if (path.includes('cocheras')) {
-        apretarBtn('cocheras')
-    } else if (path.includes('publicaciones')) {
-        apretarBtn('publicaciones')
-    } else if (path.includes('conversaciones')) {
-        apretarBtn('mensajes')
-    } else if (path.includes('transacciones')) {
-        apretarBtn('historial')
-    } else if (path === '/') {
-        apretarBtn('publicaciones')
+onMounted(() => {
+    // FIXME Delegarle el conteo al backend, ver si se pueden poner sockets
+
+    setInterval(() => {
+        contarMensajesSinLeer()
+    }, 60 * 1000)
+}),
+
+    watch(route, async () => {
+        const path = route.fullPath.toLowerCase()
+        if (path.includes('vehiculos')) {
+            apretarBtn('vehiculos')
+        } else if (path.includes('cocheras')) {
+            apretarBtn('cocheras')
+        } else if (path.includes('publicaciones')) {
+            apretarBtn('publicaciones')
+        } else if (path.includes('conversaciones')) {
+            apretarBtn('mensajes')
+        } else if (path.includes('transacciones')) {
+            apretarBtn('historial')
+        } else if (path === '/') {
+            apretarBtn('publicaciones')
+        }
+    })
+
+const conteoGeneral = ref(0)
+async function contarMensajesSinLeer() {
+    const miUsuario = localUser().id
+    const { data } = await Conversacion.obtenerDelUsuario(miUsuario)
+
+    let suma = 0
+
+    for (const conversacion of data) {
+        const { data: noLeidos } = await Conversacion.contarMensajesNoLeidos(conversacion._id, miUsuario)
+        suma += noLeidos.length
     }
-})
+
+    conteoGeneral.value = suma
+}
 </script>

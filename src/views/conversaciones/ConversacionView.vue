@@ -1,31 +1,59 @@
 <template>
-    <div v-if="datosConversacion.mostrar">
-        <!-- {{ datosConversacion }} -->
-        <br>
-        <i>* Publicación: </i>
-        <RouterLink :to="{ path: '/publicaciones/ver/' + datosConversacion.publicacion._id }">
-            {{ datosConversacion.publicacion._id }}<br>
-        </RouterLink>
-        <i>* Oferente:</i> {{ datosConversacion.oferente.nombre }}<br>
-        <i>* Demandante:</i> {{ datosConversacion.demandante.nombre }}<br>
+    <div v-if="datosConversacion.mostrar" class="mx-2 mt-2">
+        <div>
+            <span class="font-medium">
+                Publicación:
+            </span>
+            <RouterLink :to="{ path: '/publicaciones/ver/' + datosConversacion.publicacion._id }">
+                <span class="bg-gray-100 text-gray-700 text-xs font-medium mr-2 px-2 py-0.5 rounded-full">
+                    <span class="text-gray-500">
+                        #
+                    </span>
+                    {{ datosConversacion.publicacion._id.slice(-4) }}
+                </span>
+            </RouterLink>
+        </div>
 
-        <br>
-        <h2>MENSAJES</h2>
-        <ul>
-            <!-- eslint-disable-next-line vue/require-v-for-key -->
-            <li v-for="mensaje in mensajesEntreUsuarios">
-                {{ mensaje }}
-            </li>
+        <div>
+            <span class="font-medium">
+                Oferente:
+            </span>
+            {{ datosConversacion.oferente.nombre }} {{ datosConversacion.oferente.apellido }}
+        </div>
 
-        </ul>
+        <div>
+            <span class="font-medium">
+                Demandante:
+            </span>
+            {{ datosConversacion.demandante.nombre }} {{ datosConversacion.demandante.apellido }}
+        </div>
 
-        <br>
-        {{ mostrarEscribiendo }}
 
-        <br>
-        <input type="text" v-model="mensaje" @input="escribiendo" @change="enviarMensaje">
-        <button @click="enviarMensaje">Enviar</button>
+        <div id="zona-mensajes" class="max-h-40 overflow-y-auto bg-jade-50 mt-3" ref="scrollContainer">
+            <template v-for="mensaje in mensajesEntreUsuarios" :key="mensaje._id">
+                <MensajeChat :msj="mensaje" />
+            </template>
+        </div>
+    </div>
 
+
+
+    <div id="zona-escritura" class="bottom-16 fixed max-w-full w-full flex flex-col mb-4">
+
+        <span class="text-gray-600 text-xs ml-2">
+            {{ mostrarEscribiendo }}
+        </span>
+
+        <div id="zona-escritura" class="max-w-full w-full flex flex-row">
+            <input type="text" v-model="mensaje" @input="escribiendo" @change="enviarMensaje"
+                class="bg-jade-50 border border-jade-300 text-gray-800 text-sm rounded-lg focus:ring-jade-300 focus:border-jade-300 block w-full p-2.5 mr-2 ml-2">
+
+            <button type="button" @click="enviarMensaje"
+                class="text-white bg-jade-700 hover:bg-jade-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
+                <i class="bi bi-send mr-2"></i>
+                Enviar
+            </button>
+        </div>
     </div>
 </template>
 
@@ -33,10 +61,21 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
 import Conversacion from '../../api/conversaciones.js';
+import MensajeChat from '../../components/MensajeChat.vue';
 
 const routes = useRoute()
 const datosConversacion = ref({})
 const mensaje = ref('')
+const scrollContainer = ref(null);
+
+
+const scrollToBottom = () => {
+    if (scrollContainer.value) {
+        setTimeout(() => {
+            scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+        }, 100)
+    }
+};
 
 import { URL } from '../../api/index.js'
 import io from 'socket.io-client';
@@ -67,10 +106,13 @@ const enviarMensaje = () => {
         mensaje.value
     )
     mensaje.value = ''
+
 }
 
 const renderizarMensaje = (mensaje) => {
-    mensajesEntreUsuarios.value.push(`${mensaje.usuario.nombre}: ${mensaje.mensaje}`)
+    // console.log(mensaje)
+    mensajesEntreUsuarios.value.push(mensaje)
+    scrollToBottom()
 }
 
 socket.on('todosMensajes', (mensajes) => {
@@ -126,3 +168,10 @@ const escribiendo = () => {
 
 
 </script>
+
+<style>
+.max-h-40 {
+    max-height: 32rem;
+    /* Establece la altura máxima en píxeles o en la unidad deseada */
+}
+</style>

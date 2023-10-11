@@ -1,19 +1,14 @@
 <template>
-    <section id="mensajes">
-        <br>
-        <h2 class="block">MENSAJES</h2>
+    <section id="mensajes" class="mx-2 mt-4">
+        <h2 class="bloc underline text-xl">Mensajes</h2>
+
         <div v-if="conversacionesRelacionadas.length > 0">
-            <template v-for="conversacion in conversacionesRelacionadas" :key="conversacion._id">
-                <RouterLink :to="{ path: '/conversaciones/' + conversacion._id }">
-                    <div>
-                        {{ conversacion.nombre }}
-                        <span v-if="conversacion.mensajes_nuevos">
-                            ({{ conversacion.mensajes_nuevos }} mensajes nuevos)
-                        </span>
-                    </div>
-                </RouterLink>
-            </template>
+
+            <CardMensaje v-for="conversacion in conversacionesRelacionadas" :key="conversacion._id"
+                :nombre="conversacion.nombre" :cantidad="conversacion.mensajes_nuevos" :idConversacion="conversacion._id" />
         </div>
+
+
 
         <div v-else>
             <div v-if="esCreador"><!-- Vista del CREADOR -->
@@ -28,6 +23,12 @@
                 </a>
             </div>
         </div>
+
+
+
+
+
+
     </section>
 </template>
 
@@ -39,6 +40,8 @@ import localUser from '../utils/localUser.js';
 import { useRoute, useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
+
+import CardMensaje from './CardMensaje.vue';
 
 const route = useRoute()
 const router = useRouter()

@@ -1,20 +1,17 @@
 <template>
-    <div v-for="conv in conversaciones" :key="conv._id">
-        <RouterLink :to="{ path: `/conversaciones/${conv._id}` }">
-            <div v-if="conv.oferente._id != localUser().id">
-                Usuario: {{ conv.oferente.nombre }} {{ conv.oferente.apellido }}
-            </div>
-            <div v-if="conv.demandante._id != localUser().id">
-                Usuario: {{ conv.demandante.nombre }} {{ conv.demandante.apellido }}
-            </div>
-            <div>
-                Publicacion: ...{{ conv.publicacion._id.slice(-4) }}
-            </div>
-            <div>
-                Mensajes no leídos: {{ conv.noLeidos }}
-            </div>
-        </RouterLink>
-        <hr>
+    <div class="mt-5">
+        <template v-for="conv in conversaciones" :key="conv._id">
+            <template v-if="conv.oferente._id != localUser().id">
+                <CardMensaje :nombre="`${conv.oferente.nombre} ${conv.oferente.apellido}`" :cantidad="conv.noLeidos"
+                    :idConversacion="conv._id" :idPublicacion="conv.publicacion._id" />
+            </template>
+
+            <template v-if="conv.demandante._id != localUser().id">
+                <CardMensaje :nombre="`${conv.demandante.nombre} ${conv.demandante.apellido}`" :cantidad="conv.noLeidos"
+                    :idConversacion="conv._id" :idPublicacion="conv.publicacion._id" />
+            </template>
+
+        </template>
     </div>
 </template>
 
@@ -22,6 +19,8 @@
 import { ref, onMounted } from 'vue';
 import Conversacion from '../../api/conversaciones.js'
 import localUser from '../../utils/localUser.js';
+
+import CardMensaje from '../../components/CardMensaje.vue';
 
 const conversaciones = ref()
 

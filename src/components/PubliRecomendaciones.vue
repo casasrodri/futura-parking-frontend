@@ -1,8 +1,7 @@
 <template>
-    <section id="recomendaciones">
+    <section id="recomendaciones" class="mx-2 mt-4">
 
-        <br>
-        <h2 class="block">RECOMENDACIONES</h2>
+        <h2 class="bloc underline text-xl">Publicaciones recomendadas</h2>
         <!--
 Creador:
  - Le interesa ver las recomendadas menos las del usuario logueado
@@ -29,7 +28,6 @@ Todos:
 
 <script setup>
 import Publicacion from '../api/publicaciones.js';
-import { RouterLink } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import CardPubli from './CardPubli.vue';
