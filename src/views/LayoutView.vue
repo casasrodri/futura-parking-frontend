@@ -22,7 +22,10 @@ import localUser from '../utils/localUser.js'
 const router = useRouter()
 
 onMounted(async () => {
-    if (!localUser().id) router.push({ name: 'login' })
+    setInterval(() => {
+        if (!localUser().id) router.push({ name: 'login' })
+    }, 10 * 1000)
 })
 
 </script>
+

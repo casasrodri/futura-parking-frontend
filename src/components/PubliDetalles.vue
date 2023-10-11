@@ -95,7 +95,7 @@
                     Cochera:
                 </span>
 
-                <RouterLink :to="{ path: '/cocheras/' + publicacion.cochera._id }">
+                <RouterLink :to="{ name: 'cocherasView', params: { id: publicacion.cochera._id } }">
                     {{ publicacion.cochera.numero }} ({{ publicacion.cochera.tipo }})
                 </RouterLink>
                 <br>

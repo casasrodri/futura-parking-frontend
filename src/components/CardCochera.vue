@@ -4,7 +4,7 @@
 
         <div id="acciones" class="flex flex-row w-full px-2 mt-1 items-center justify-end">
 
-            <RouterLink :to="{ name: 'cocherasForm', params: { id: cochera._id } }">
+            <RouterLink :to="{ name: 'cocherasEdit', params: { id: cochera._id } }">
                 <div class="mr-3 text-gray-500">
                     <i class="bi bi-pencil-fill"></i>
                 </div>

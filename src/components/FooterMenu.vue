@@ -43,12 +43,13 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import BotonBarraInferior from './BotonBarraInferior.vue';
 import Conversacion from '../api/conversaciones.js';
 import localUser from '../utils/localUser.js';
 
 const route = useRoute()
+const router = useRouter()
 
 const btnActivo = ref({
     publicaciones: true
@@ -63,29 +64,35 @@ function apretarBtn(boton) {
 }
 
 onMounted(() => {
+    analizarRuta()
+
     // FIXME Delegarle el conteo al backend, ver si se pueden poner sockets
 
     setInterval(() => {
         contarMensajesSinLeer()
     }, 60 * 1000)
-}),
+})
 
-    watch(route, async () => {
-        const path = route.fullPath.toLowerCase()
-        if (path.includes('vehiculos')) {
-            apretarBtn('vehiculos')
-        } else if (path.includes('cocheras')) {
-            apretarBtn('cocheras')
-        } else if (path.includes('publicaciones')) {
-            apretarBtn('publicaciones')
-        } else if (path.includes('conversaciones')) {
-            apretarBtn('mensajes')
-        } else if (path.includes('transacciones')) {
-            apretarBtn('historial')
-        } else if (path === '/') {
-            apretarBtn('publicaciones')
-        }
-    })
+function analizarRuta() {
+    const path = route.fullPath.toLowerCase()
+    if (path.includes('vehiculos')) {
+        apretarBtn('vehiculos')
+    } else if (path.includes('cocheras')) {
+        apretarBtn('cocheras')
+    } else if (path.includes('publicaciones')) {
+        apretarBtn('publicaciones')
+    } else if (path.includes('conversaciones')) {
+        apretarBtn('mensajes')
+    } else if (path.includes('transacciones')) {
+        apretarBtn('historial')
+    } else if (path === '/') {
+        apretarBtn('publicaciones')
+    }
+}
+
+watch(route, async () => {
+    analizarRuta()
+})
 
 const conteoGeneral = ref(0)
 async function contarMensajesSinLeer() {

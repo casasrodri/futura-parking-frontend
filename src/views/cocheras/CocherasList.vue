@@ -4,7 +4,7 @@
     </template>
 
     <div class="flex w-full bottom-20 fixed place-content-end">
-        <CardNuevo texto="Nueva" :to="{ path: '/cocheras/alta' }" />
+        <CardNuevo texto="Nueva" :to="{ name: 'cocherasAlta' }" />
     </div>
 
     <div v-for="cochera in cocheras" :key="cochera._id">
