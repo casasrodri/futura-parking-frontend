@@ -6,9 +6,11 @@
         </div>
         <hr class="h-px mt-2 bg-jade-200 border-0">
 
-        <!-- <div class="my-4">
-            Perfil
-        </div> -->
+        <div class="my-4">
+            <RouterLink :to="{ name: 'ayuda' }">
+                Ayuda
+            </RouterLink>
+        </div>
 
         <div class="my-4 cursor-pointer text-red-500" @click="cerrarSesion">
             Cerrar sesión
