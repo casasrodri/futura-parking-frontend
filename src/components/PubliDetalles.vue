@@ -1,5 +1,7 @@
 <template>
-    <section id="infoPublicacion" v-if="publicacion._id">
+    <section id="infoPublicacion" v-if="publicacion._id" class="mt-3">
+
+        <h2 class="block underline text-xl mx-2">Detalles</h2>
 
         <div id="tarjeta-datos" class="mx-2 mt-2">
             <div>
@@ -102,7 +104,7 @@
             </span>
 
             <div v-if="esCreador">
-                <br>
+                <!-- FIXME Agregar botonera acá -->
                 <RouterLink :to="{ path: '/publicaciones/editar/' + publicacion._id }">
                     <div class="mr-3 text-gray-500">
                         <i class="bi bi-pencil-fill"></i>
@@ -116,7 +118,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { fecha, hora } from '../utils/formats.js'
-import localUser from '../utils/localUser.js';
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({

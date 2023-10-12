@@ -2,9 +2,21 @@
     <SelectorPubli />
     <!-- {{ $route.params }} -->
     <!-- {{ publicaciones }} -->
+
+
     <div class="max-w-lg mx-auto w-full px-2 py-2">
-        <template v-for="publi in publicaciones" :key="publi._id">
-            <CardPubli :publicacion="publi" />
+        <template v-if="publicaciones.length === 0">
+            <div class="text-center text-gray-600 mt-5">
+                <span class="text-red-300">
+                    <i class="bi bi-exclamation-circle-fill text-2xl"></i>
+                </span>
+                <p class="">No hay publicaciones disponibles</p>
+            </div>
+        </template>
+        <template v-else>
+            <template v-for="publi in publicaciones" :key="publi._id">
+                <CardPubli :publicacion="publi" />
+            </template>
         </template>
     </div>
 </template>
@@ -19,18 +31,16 @@ import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
-const publicaciones = ref()
+const publicaciones = ref([])
 
 const getPublicaciones = async () => {
     let renderizar
+    const tipoPub = route.params.tipoPub === 'ofertas' ? 'oferta' : 'demanda'
+    const { data } = await Publicacion.obtenerDisponibles(tipoPub);
 
     if (route.params.tipoVis === 'mias') {
-        const tipoPub = route.params.tipoPub === 'ofertas' ? 'demanda' : 'oferta'
-        const { data } = await Publicacion.obtenerDisponibles(tipoPub);
         renderizar = data.filter(publi => publi.creador._id === localUser().id)
     } else {
-        const tipoPub = route.params.tipoPub === 'ofertas' ? 'oferta' : 'demanda'
-        const { data } = await Publicacion.obtenerDisponibles(tipoPub);
         renderizar = data.filter(publi => publi.creador._id !== localUser().id)
     }
 

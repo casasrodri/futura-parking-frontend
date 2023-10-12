@@ -17,7 +17,7 @@
             </p>
         </div>
 
-        <div>
+        <div v-if="cochera.observaciones">
             <span class="font-medium">Observaciones:</span>
             <p class="ml-2 text-gray-600">
                 {{ cochera.observaciones }}

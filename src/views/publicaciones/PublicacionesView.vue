@@ -11,15 +11,12 @@ import PubliMensajes from '../../components/PubliMensajes.vue';
 import PubliRecomendaciones from '../../components/PubliRecomendaciones.vue';
 import { ref, onMounted, watch } from 'vue';
 import Publicacion from '../../api/publicaciones.js';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import localUser from '../../utils/localUser.js';
 
 const publicacion = ref({ creador: {}, vehiculo: {} })
 const esCreador = ref(false)
 const route = useRoute()
-const router = useRouter()
-
-const atrasPag = () => router.go(-1)
 
 const actualizarComponente = async () => {
     const res = await Publicacion.get(route.params.id);

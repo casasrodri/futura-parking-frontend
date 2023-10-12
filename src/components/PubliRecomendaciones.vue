@@ -1,15 +1,6 @@
 <template>
     <section id="recomendaciones" class="mx-2 mt-4">
-
         <h2 class="bloc underline text-xl">Publicaciones recomendadas</h2>
-        <!--
-Creador:
- - Le interesa ver las recomendadas menos las del usuario logueado
-{{ recom.creador._id === localUser().id }}
-
-Todos:
-- Le interesa ver todas las publicaciones recomendadas (menos las del creador)
--->
 
         <template v-if="recomendadas.length > 0">
             <template v-for="recom in  recomendadas " :key="recom._id">
@@ -20,7 +11,9 @@ Todos:
         </template>
 
         <template v-else>
-            No hay recomendaciones...
+            <div class="text-gray-500 mt-1">
+                No hay recomendaciones para esta publicación.
+            </div>
         </template>
 
     </section>
@@ -46,6 +39,11 @@ onMounted(() => {
 
 const obtenerPublRecomendadas = async () => {
     const resRecomendadas = await Publicacion.obtenerRecomendaciones(route.params.id);
-    recomendadas.value = resRecomendadas.data
+
+    const filtrado = resRecomendadas.data.filter((recom) => {
+        return recom.creador._id != props.publicacion.creador._id
+    })
+
+    recomendadas.value = filtrado
 }
 </script>
