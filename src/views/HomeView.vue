@@ -9,7 +9,7 @@
             Futura Parking
         </div>
 
-        {{ enviromentVar }}
+        Variable: {{ enviromentVar }}
     </div>
 </template>
 
