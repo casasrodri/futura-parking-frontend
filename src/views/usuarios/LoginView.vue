@@ -40,7 +40,7 @@
     <!-- {{ email }} -->
     <!-- {{ password }} -->
 
-    Bienvenido: {{ enviromentVar }}
+    Bienvenido: <span>{{ enviromentVar }}</span>
 </template>
 
 <script setup>
@@ -52,7 +52,7 @@ import localUser from '../../utils/localUser.js'
 import HeaderSesion from '../../components/HeaderSesion.vue'
 
 const router = useRouter()
-const enviromentVar = import.meta.env.VITE_BIENVENIDO
+const enviromentVar = import.meta.env
 const email = ref('')
 const password = ref('')
 
