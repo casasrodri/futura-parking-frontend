@@ -9,11 +9,11 @@
             Futura Parking
         </div>
 
-        Variable: {{ enviromentVar }}
+        Bienvenido: {{ enviromentVar }}
     </div>
 </template>
 
 <script setup>
 
-const enviromentVar = import.meta.env.VITE_API_URL
+const enviromentVar = import.meta.env.VITE_BIENVENIDO
 </script>
