@@ -69,7 +69,7 @@
             </p>
             <p class="text-sm">
                 Allí podrás ponerte de acuerdo en los detalles de la transacción, y
-                coordinar la forma de pag.
+                coordinar la forma de pago.
             </p>
         </div>
     </section>
