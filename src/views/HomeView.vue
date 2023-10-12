@@ -8,5 +8,12 @@
         <div class="inline-block font-montserrat text-jade-600 font-medium text-4xl mt-10 drop-shadow-xl">
             Futura Parking
         </div>
+
+        {{ enviromentVar }}
     </div>
 </template>
+
+<script setup>
+
+const enviromentVar = import.meta.env.VITE_API_URL
+</script>

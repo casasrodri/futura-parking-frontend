@@ -16,15 +16,22 @@ import FooterMenu from '../components/FooterMenu.vue';
 
 import { RouterView } from 'vue-router'
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import localUser from '../utils/localUser.js'
 
 const router = useRouter()
+const route = useRoute()
+
+function redireccionarLogin() {
+    if (!localUser().id && route.name !== 'signup')
+        router.push({ name: 'login' })
+}
 
 onMounted(async () => {
+    redireccionarLogin()
     setInterval(() => {
-        if (!localUser().id) router.push({ name: 'login' })
-    }, 10 * 1000)
+        redireccionarLogin()
+    }, 10 * 1000) // Segundos
 })
 
 </script>

@@ -37,8 +37,8 @@
         <RouterLink :to="{ name: 'signup' }">Registrarse</RouterLink>
     </div>
 
-    {{ email }}
-    {{ password }}
+    <!-- {{ email }} -->
+    <!-- {{ password }} -->
 </template>
 
 <script setup>
@@ -55,7 +55,6 @@ const email = ref('')
 const password = ref('')
 
 onMounted(async () => {
-    // TODO Tendria que hacer que si está logueado, vaya a la pagina principal
     if (localUser().id) router.push({ name: 'home' })
 })
 

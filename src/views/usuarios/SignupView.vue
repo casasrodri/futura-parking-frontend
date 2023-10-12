@@ -87,7 +87,7 @@
         <RouterLink :to="{ name: 'login' }">Iniciar sesión</RouterLink>
     </div>
 
-    {{ errores }}
+    <!-- {{ errores }} -->
 </template>
 
 <script setup>
@@ -96,9 +96,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { post } from '../../api/index.js'
 import HeaderSesion from '../../components/HeaderSesion.vue'
-
-
-import axios from 'axios'
+import localUser from '../../utils/localUser.js'
 
 const router = useRouter()
 const nuevoUsuario = ref({
@@ -112,7 +110,6 @@ const nuevoUsuario = ref({
 const errores = ref([])
 
 const register = async () => {
-    // FIXME: Hacer algunas validaciones al formulario
     try {
         const res = await post('/api/usuarios', nuevoUsuario.value)
         console.log(res)
@@ -127,14 +124,8 @@ const register = async () => {
 }
 
 onMounted(async () => {
-    // Se chequea si el usuario está logueado
-    const infoSesion = await axios.get('http://localhost:8080/api/sesiones')
-    console.log(infoSesion.data)
-    console.log(document.cookie)
-    // mostrar
-    // Si no está logueado, se redirige a la página de login
+    if (localUser().id) router.push({ name: 'home' })
 })
-
 
 </script>
 
