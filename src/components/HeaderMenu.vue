@@ -10,7 +10,7 @@
             </RouterLink>
         </template>
 
-        <div class="inline-block text-2xl text-jade-600 hover:text-jade-800 mr-3" @click="mostrarUserMenu"
+        <div class="inline-block text-2xl text-jade-600 hover:text-jade-800 mr-4" @click="mostrarUserMenu"
             :title="localUser().nombre">
             <i class="bi bi-person-circle"></i>
         </div>

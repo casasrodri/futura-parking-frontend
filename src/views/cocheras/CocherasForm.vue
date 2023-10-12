@@ -1,28 +1,58 @@
 <template>
-    <h2>FORMULARIO</h2>
+    <div class="mt-3 ml-4 mr-4">
+
+        <h2 class="block underline text-xl mb-3">{{ titulo }}</h2>
+
+        <form @submit.prevent="btnFuncion">
+
+            <div class="my-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900">
+                    Número
+                </label>
+                <input type="number" required v-model="cochera.numero"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+                    placeholder="" />
+            </div>
+
+            <div class="my-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900">
+                    Tipo
+                </label>
+                <select v-model="cochera.tipo"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                    <option value="semi-cubierta">Semi-Cubierta</option>
+                    <option value="subterránea">Subterránea</option>
+                </select>
+            </div>
+
+            <div class="my-3">
+                <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900">
+                    Observaciones
+                </label>
+                <textarea id="observaciones" rows="3"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+                    placeholder="" v-model="cochera.observaciones" required></textarea>
+            </div>
 
 
-    <form @submit.prevent="btnFuncion">
-        <label for="numero">Número</label>
-        <input type="number" v-model="cochera.numero" placeholder="Número" />
+            <div class="flex w-full justify-end mt-4">
+                <button type="submit"
+                    class="mx-1 text-white bg-jade-500 hover:bg-jade-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+                    <template v-if="btnGuardar == 'Actualizar'">
+                        <i class="bi bi-arrow-repeat mr-2"></i>
+                    </template>
+                    <template v-else>
+                        <i class="bi bi-arrow-return-right mr-2"></i>
+                    </template>
+                    {{ btnGuardar }}
+                </button>
+            </div>
+        </form>
 
-        <br>
-        <label for="tipo">Tipo</label>
-        <select v-model="cochera.tipo">
-            <option value="semi-cubierta">Semi-Cubierta</option>
-            <option value="subterránea">Subterránea</option>
-        </select>
-
-        <br>
-        <label for="observaciones">Observaciones</label>
-        <textarea v-model="cochera.observaciones" placeholder="Observaciones"></textarea>
-
-        <br>
-        <button type="submit">{{ btnGuardar }}</button>
-    </form>
-
-    <br><br>
-    {{ errores }}
+        <!-- {{ cochera }}
+        <br><br> -->
+        <!-- {{ errores }} -->
+    </div>
 </template>
 
 <script setup>
@@ -67,6 +97,7 @@ const registrar = async () => {
 
 const btnGuardar = ref('Actualizar')
 const btnFuncion = ref(actualizar)
+const titulo = ref('Editar cochera')
 const route = useRoute()
 
 onMounted(async () => {
@@ -74,6 +105,7 @@ onMounted(async () => {
         // console.log('alta')
         btnGuardar.value = 'Registrar'
         btnFuncion.value = registrar
+        titulo.value = 'Nueva cochera'
     } else {
         // console.log('editar')
         const res = await Cochera.get(route.params.id)

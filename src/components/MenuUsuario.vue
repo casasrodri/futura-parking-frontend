@@ -1,5 +1,5 @@
 <template>
-    <div :class="'border-3 shadow-md fixed right-2 top-14 bg-jade-100/90 z-10 p-2 px-6 ' + visible">
+    <div :class="'border-3 shadow-md fixed right-2 top-14 bg-jade-100/90 z-10 p-2 px-6 mr-2 ' + visible">
 
         <div class="mt-2 font-medium text-jade-900" :title="localUser().id">
             {{ localUser().nombreCompleto }}

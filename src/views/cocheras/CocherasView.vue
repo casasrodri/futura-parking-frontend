@@ -4,31 +4,32 @@
         <h2 class="block underline text-xl mb-3">Cochera</h2>
 
         <div>
-            <span class="font-medium">
-                Número:
-            </span>
-            {{ cochera.numero }}
+            <span class="font-medium">Número:</span>
+            <p class="ml-2 text-gray-600">
+                {{ cochera.numero }}
+            </p>
         </div>
 
         <div>
-            <span class="font-medium">
-                Tipo:
-            </span>
-            {{ capitalizar(cochera.tipo) }}
+            <span class="font-medium">Tipo:</span>
+            <p class="ml-2 text-gray-600">
+                <span class="capitalize">{{ cochera.tipo }}</span>
+            </p>
         </div>
 
         <div>
-            <span class="font-medium">
-                Observaciones:
-            </span>
-            {{ cochera.observaciones }}
+            <span class="font-medium">Observaciones:</span>
+            <p class="ml-2 text-gray-600">
+                {{ cochera.observaciones }}
+            </p>
         </div>
 
         <div>
-            <span class="font-medium">
-                Propietario:
-            </span>
-            {{ cochera.propietario.nombre }} {{ cochera.propietario.apellido }}
+            <span class="font-medium">Propietario:</span>
+            <p class="ml-2 text-gray-600">
+                <span class="capitalize">{{ cochera.propietario.nombre }}</span> <span class="capitalize">{{
+                    cochera.propietario.apellido }}</span>
+            </p>
         </div>
 
         <div v-if="localUser().id === cochera.propietario._id">
@@ -60,7 +61,6 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Cocheras from '../../api/cocheras.js'
-import { capitalizar } from '../../utils/formats.js';
 import localUser from '../../utils/localUser.js';
 
 const route = useRoute()

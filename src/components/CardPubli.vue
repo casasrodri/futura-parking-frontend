@@ -1,4 +1,5 @@
 <template>
+    <!-- {{ publicacion }} -->
     <RouterLink :to="{ path: '/publicaciones/ver/' + publicacion._id }">
 
         <div id="card"
