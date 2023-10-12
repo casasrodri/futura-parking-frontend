@@ -67,16 +67,16 @@ const registrar = async () => {
 
 const btnGuardar = ref('Actualizar')
 const btnFuncion = ref(actualizar)
-const routes = useRoute()
+const route = useRoute()
 
 onMounted(async () => {
-    if (routes.params.id === 'alta') {
+    if (route.name === 'cocherasAlta') {
         // console.log('alta')
         btnGuardar.value = 'Registrar'
         btnFuncion.value = registrar
     } else {
         // console.log('editar')
-        const res = await Cochera.get(routes.params.id)
+        const res = await Cochera.get(route.params.id)
         // console.log(res)
         cochera.value = res.data
     }

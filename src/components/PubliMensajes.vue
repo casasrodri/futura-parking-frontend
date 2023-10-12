@@ -1,6 +1,6 @@
 <template>
     <section id="mensajes" class="mx-2 mt-4">
-        <h2 class="bloc underline text-xl">Mensajes</h2>
+        <h2 class="block underline text-xl">Mensajes</h2>
 
         <div v-if="conversacionesRelacionadas.length > 0">
 

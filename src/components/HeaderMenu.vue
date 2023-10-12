@@ -4,7 +4,7 @@
 
         <template v-if="$route.name != 'home'">
             <RouterLink :to="{ name: 'home' }" replace>
-                <div class="inline-block font-montserrat text-jade-800 font-medium text-3xl">
+                <div class="inline-block font-montserrat text-jade-800 font-medium text-2xl">
                     Futura Parking
                 </div>
             </RouterLink>
