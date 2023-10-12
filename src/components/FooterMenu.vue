@@ -55,11 +55,14 @@ const btnActivo = ref({
     publicaciones: true
 })
 
-function apretarBtn(boton) {
+function deseleccionarTodo() {
     Object.keys(btnActivo.value).forEach(prop => {
         btnActivo.value[prop] = false;
     });
+}
 
+function apretarBtn(boton) {
+    deseleccionarTodo();
     btnActivo.value[boton] = true;
 }
 
@@ -86,7 +89,7 @@ function analizarRuta() {
     } else if (path.includes('transacciones')) {
         apretarBtn('historial')
     } else if (path === '/') {
-        apretarBtn('publicaciones')
+        deseleccionarTodo();
     }
 }
 

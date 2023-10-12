@@ -1,14 +1,14 @@
 <template>
-    <div :class="'border-3 shadow-md fixed right-2 top-14 bg-jade-100/90 p-2 px-6 ' + visible">
+    <div :class="'border-3 shadow-md fixed right-2 top-14 bg-jade-100/90 z-10 p-2 px-6 ' + visible">
 
         <div class="mt-2 font-medium text-jade-900" :title="localUser().id">
             {{ localUser().nombreCompleto }}
         </div>
         <hr class="h-px mt-2 bg-jade-200 border-0">
 
-        <div class="my-4">
+        <!-- <div class="my-4">
             Perfil
-        </div>
+        </div> -->
 
         <div class="my-4 cursor-pointer text-red-500" @click="cerrarSesion">
             Cerrar sesión

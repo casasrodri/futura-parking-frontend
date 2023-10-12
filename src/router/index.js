@@ -4,6 +4,7 @@ import SignupView from '../views/sesiones/SignupView.vue'
 import LoginView from '../views/sesiones/LoginView.vue'
 
 import LayoutView from '../views/LayoutView.vue'
+import HomeView from '../views/HomeView.vue'
 
 import CocherasList from '../views/cocheras/CocherasList.vue'
 import CocherasForm from '../views/cocheras/CocherasForm.vue'
@@ -32,8 +33,8 @@ const router = createRouter({
         {
           path: '/',
           name: 'home',
-          // component: PublicacionesHome,
-          redirect: '/publicaciones/ofertas/otros'
+          component: HomeView
+          // redirect: '/publicaciones/ofertas/otros'
         },
         // COCHERAS
         {
@@ -49,7 +50,7 @@ const router = createRouter({
         {
           path: '/cocheras/:id',
           name: 'cocherasView',
-          component: CocherasForm
+          component: CocherasView
         },
         {
           path: '/cocheras/:id/editar',

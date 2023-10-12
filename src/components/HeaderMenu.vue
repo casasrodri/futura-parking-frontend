@@ -1,13 +1,14 @@
 <template>
     <nav class="w-full h-14 bg-jade-200 flex items-center justify-between top-0 fixed">
-
         <FlechaAtras />
 
-        <RouterLink :to="{ name: 'home' }" replace>
-            <div class="inline-block font-montserrat text-jade-800 font-medium text-3xl">
-                Futura Parking
-            </div>
-        </RouterLink>
+        <template v-if="$route.name != 'home'">
+            <RouterLink :to="{ name: 'home' }" replace>
+                <div class="inline-block font-montserrat text-jade-800 font-medium text-3xl">
+                    Futura Parking
+                </div>
+            </RouterLink>
+        </template>
 
         <div class="inline-block text-2xl text-jade-600 hover:text-jade-800 mr-3" @click="mostrarUserMenu"
             :title="localUser().nombre">
