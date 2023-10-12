@@ -19,8 +19,7 @@
                 <!-- newspaper -->
             </RouterLink>
 
-            <RouterLink :to="{ name: 'conversacionesList' }">
-                <!-- FIXME transaccionesList -->
+            <RouterLink :to="{ name: 'transaccionesList' }">
                 <BotonBarraInferior icono="clock-history" :seleccionado="btnActivo.historial"
                     @click="apretarBtn('historial')" />
             </RouterLink>

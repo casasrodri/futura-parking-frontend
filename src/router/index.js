@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import SignupView from '../views/sesiones/SignupView.vue'
-import LoginView from '../views/sesiones/LoginView.vue'
+import SignupView from '../views/usuarios/SignupView.vue'
+import LoginView from '../views/usuarios/LoginView.vue'
 
 import LayoutView from '../views/LayoutView.vue'
 import HomeView from '../views/HomeView.vue'
@@ -20,6 +20,8 @@ import PublicacionesList from '../views/publicaciones/PublicacionesList.vue'
 
 import ConversacionView from '../views/conversaciones/ConversacionView.vue'
 import ConversacionesList from '../views/conversaciones/ConversacionesList.vue'
+
+import TransaccionesList from '../views/transacciones/TransaccionesList.vue'
 
 import TestView from '../views/TestView.vue'
 
@@ -89,29 +91,6 @@ const router = createRouter({
           name: 'publicacionesList',
           component: PublicacionesList
         },
-        // {
-        //   path: '/publicaciones',
-        //   name: 'publicacionesList',
-        //   component: PublicacionesHome,
-        //   redirect: '/publicaciones/ofertas/otros',
-        //   children: [
-        //     {
-        //       path: '/publicaciones/ofertas',
-        //       name: 'publicacionesOfertas',
-        //       component: PublicacionesVisualizar
-        //     },
-        //     {
-        //       path: '/publicaciones/pedidos',
-        //       name: 'publicacionesPedidos',
-        //       component: PublicacionesVisualizar
-        //     },
-        //     {
-        //       path: '/publicaciones/misPublicaciones',
-        //       name: 'misPublicaciones',
-        //       component: MisPublicaciones
-        //     }
-        //   ]
-        // },
         {
           path: '/publicaciones/alta',
           name: 'publicacionesAlta',
@@ -126,6 +105,13 @@ const router = createRouter({
           path: '/publicaciones/ver/:id',
           name: 'publicacionesView',
           component: PublicacionesView
+        },
+
+        // TRANSACCIONES
+        {
+          path: '/transacciones',
+          name: 'transaccionesList',
+          component: TransaccionesList
         },
 
         // MENSAJES
