@@ -77,7 +77,7 @@
                     Vehículo:
                 </span>
 
-                <RouterLink :to="{ path: '/vehiculos/' + publicacion.vehiculo._id }">
+                <RouterLink :to="{ name: 'vehiculosView', params: { id: publicacion.vehiculo._id } }">
                     <span v-if="esCreador">
                         {{ publicacion.vehiculo.alias }} ({{ publicacion.vehiculo.patente }})
                     </span>

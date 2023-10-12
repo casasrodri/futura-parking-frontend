@@ -6,7 +6,7 @@
     </template>
 
     <div class="flex w-full bottom-20 fixed place-content-end">
-        <CardNuevo texto="Nuevo" :to="{ path: '/vehiculos/alta' }" />
+        <CardNuevo texto="Nuevo" :to="{ name: 'vehiculosAlta' }" />
     </div>
 
 

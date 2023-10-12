@@ -2,21 +2,6 @@
     <div id="card"
         class="m-3 max-w-sm p-5 pb-2 bg-white border border-jade-200 rounded-lg shadow hover:bg-jade-100 hover:border-jade-400 hover:shadow-md flex flex-col items-center justify-center">
 
-        <div id="acciones" class="flex flex-row w-full px-2 mt-1 items-center justify-end">
-
-            <RouterLink :to="{ name: 'vehiculosForm', params: { id: vehiculo._id } }">
-                <div class="mr-3 text-gray-500">
-                    <i class="bi bi-pencil-fill"></i>
-                </div>
-            </RouterLink>
-
-
-            <div class="text-red-500">
-                <i class="bi bi-trash3-fill"></i>
-            </div>
-        </div>
-
-
         <h5 id="titulo" class="block mb-2 text-4xl font-bold tracking-tight text-jade-800">
             {{ vehiculo.alias }}
         </h5>

@@ -12,6 +12,7 @@ import CocherasView from '../views/cocheras/CocherasView.vue'
 
 import VehiculosList from '../views/vehiculos/VehiculosList.vue'
 import VehiculosForm from '../views/vehiculos/VehiculosForm.vue'
+import VehiculosView from '../views/vehiculos/VehiculosView.vue'
 
 import PublicacionesForm from '../views/publicaciones/PublicacionesForm.vue'
 import PublicacionesView from '../views/publicaciones/PublicacionesView.vue'
@@ -65,8 +66,18 @@ const router = createRouter({
           component: VehiculosList
         },
         {
+          path: '/vehiculos/alta',
+          name: 'vehiculosAlta',
+          component: VehiculosForm
+        },
+        {
           path: '/vehiculos/:id',
-          name: 'vehiculosForm',
+          name: 'vehiculosView',
+          component: VehiculosView
+        },
+        {
+          path: '/vehiculos/:id/editar',
+          name: 'vehiculosEdit',
           component: VehiculosForm
         },
 
