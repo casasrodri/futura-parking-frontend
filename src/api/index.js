@@ -1,10 +1,10 @@
 import axios from 'axios'
 import Cookies from '../utils/cookies.js'
 
-export const PORT = import.meta.env.VITE_API_PORT || 8080
-export const URL = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:${PORT}`
+export const PORT = import.meta.env['VITE_API_PORT'] || 8080
+export const URL = import.meta.env['VITE_API_URL'] || `http://${window.location.hostname}:${PORT}`
 
-const LOG_DETALLADO = import.meta.env.VITE_LOG_AXIOS === '1' || false
+const LOG_DETALLADO = import.meta.env['VITE_LOG_AXIOS'] === '1' || false
 
 const api = axios.create({
   baseURL: URL
