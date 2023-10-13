@@ -31,7 +31,7 @@
         <div class="flex flex-col mx-4 gap-2 mb-4">
             <h2 class="block underline text-xl text-jade-700">Publicaciones</h2>
             <p class="text-sm">
-                En esta sección podrás interactuar con los demás usuarios para ofecer o requerir
+                En esta sección podrás interactuar con los demás usuarios para ofrecer o requerir
                 el alquiler de cocheras.
             </p>
             <p class="text-sm">
@@ -44,9 +44,9 @@
                 recomendadas a la misma.
             </p>
             <p class="text-sm">
-                Por ejemplo, si ofreces una cochera, en publicaciones recomendadas
-                verás aquellas solicitudes de cocheras de otras personas, que podrían interesarte, viendo
-                asímismo que porcentaje de coincidencia con tu publicación existe.
+                Por ejemplo, si ofreces una cochera, en las publicaciones recomendadas verás las
+                solicitudes de cocheras de otras personas que podrían interesarte, y podrás
+                comprobar el porcentaje de coincidencia con tu publicación.
             </p>
         </div>
 
