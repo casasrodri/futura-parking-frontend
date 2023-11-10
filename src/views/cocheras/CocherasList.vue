@@ -8,9 +8,11 @@
         </div>
     </template>
     <template v-else>
-        <template v-for="cochera in cocheras" :key="cochera._id">
-            <CardCochera :cochera="cochera" />
-        </template>
+        <div class="flex flex-col items-center">
+            <template v-for="cochera in cocheras" :key="cochera._id">
+                <CardCochera :cochera="cochera" />
+            </template>
+        </div>
     </template>
 
     <div class="flex w-full bottom-20 fixed place-content-end">

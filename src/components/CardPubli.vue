@@ -3,7 +3,7 @@
     <RouterLink :to="{ path: '/publicaciones/ver/' + publicacion._id }">
 
         <div id="card"
-            class="m-3 max-w-sm p-5 pb-2 bg-white border border-jade-200 rounded-lg shadow hover:bg-jade-100 hover:border-jade-400 hover:shadow-md flex flex-col items-center justify-center">
+            class="m-3 w-96 p-5 pb-2 bg-white border border-jade-200 rounded-lg shadow hover:bg-jade-100 hover:border-jade-400 hover:shadow-md flex flex-col items-center justify-center">
 
             <h5 id="titulo" class="block mb-2 text-2xl font-bold tracking-tight text-jade-800">
                 <template v-if="propia">
@@ -108,15 +108,23 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
 import { fecha, hora, capitalizar } from '../utils/formats.js';
 import localUser from '../utils/localUser.js';
+const propia = ref(false)
 
-const propia = localUser().id === props.publicacion.creador._id
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
-    publicacion: Object,
+    // FIXME: cambiar por el tipo correcto
+    publicacion: Object
 })
+
+
+onMounted(() => {
+    propia.value = localUser().id === props.publicacion.creador._id
+})
+
 
 const round = (number) => {
     const roundedNumber = Math.round(number);

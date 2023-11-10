@@ -62,6 +62,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Cocheras from '../../api/cocheras.js'
 import localUser from '../../utils/localUser.js';
+import Swal from 'sweetalert2'
 
 const route = useRoute()
 const router = useRouter()
@@ -75,10 +76,29 @@ onMounted(async () => {
 })
 
 const deleteCochera = async (id) => {
-    alert('Se está eliminando la cochera con id: ' + id)
-    const res = await Cocheras.delete(id)
-    console.log(res)
-    alert('Eliminada!!')
-    router.push({ name: 'cocherasList' })
+    Swal.fire({
+        title: "Deseas eliminar la cochera?",
+        text: 'cochera con id: ' + id,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1acd81",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+
+            const res = await Cocheras.delete(id)
+            console.log(res)
+
+            Swal.fire({
+                title: "Eliminada!",
+                text: "La cochera ha sido eliminada.",
+                icon: "success"
+            });
+
+            router.push({ name: 'cocherasList' })
+        }
+    });
 }
 </script>

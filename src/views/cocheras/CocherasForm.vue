@@ -60,6 +60,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Cochera from '../../api/cocheras.js'
+import Swal from 'sweetalert2'
 
 const router = useRouter()
 const errores = ref([])
@@ -72,16 +73,36 @@ const cochera = ref({
 import localUser from '../../utils/localUser.js'
 
 const actualizar = async () => {
-    alert('Se está actualizando')
-    const res = await Cochera.update(cochera.value._id, cochera.value)
-    alert('Actualizada!!')
-    router.push({ name: 'cocherasList' })
+
+    Swal.fire({
+        title: "Deseas guardar los cambios?",
+        text: 'Cochera con id: ' + cochera.value._id,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1acd81",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+
+            const res = await Cochera.update(cochera.value._id, cochera.value)
+            console.log(res)
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Cochera actualizada!",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            router.push({ name: 'cocherasList' })
+        }
+    });
 }
 
 const registrar = async () => {
-    alert('Se está creando la nueva cochera')
-
-
     const nuevaCochera = {
         numero: cochera.value.numero,
         tipo: cochera.value.tipo,
@@ -91,7 +112,15 @@ const registrar = async () => {
 
     const res = await Cochera.create(nuevaCochera)
     console.log(res)
-    alert('Creada!!')
+
+    Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Cochera creada!",
+        showConfirmButton: false,
+        timer: 1500
+    });
+
     router.push({ name: 'cocherasList' })
 }
 

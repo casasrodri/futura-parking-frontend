@@ -12,6 +12,12 @@
             </RouterLink>
         </div>
 
+        <div class="my-4">
+            <RouterLink :to="{ name: 'version' }">
+                Versión
+            </RouterLink>
+        </div>
+
         <div class="my-4 cursor-pointer text-red-500" @click="cerrarSesion">
             Cerrar sesión
         </div>

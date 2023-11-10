@@ -26,9 +26,12 @@
         </div>
     </div>
 
-    <div class="text-xs ml-6 -my-1 text-teal-800">
-        {{ textoVariable }}
-        <br>
+    <div class="text-xs text-teal-800 mx-auto w-full max-w-full flex flex-col items-center">
+        <div id="card" class=" -my-1 w-96">
+            {{ textoVariable }}
+            <br>
+        </div>
+
         <!-- {{ filtros }} -->
         <!-- {{ $route.fullPath }} -->
 

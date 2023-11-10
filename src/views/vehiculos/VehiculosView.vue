@@ -84,6 +84,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Vehiculos from '../../api/vehiculos.js'
 import localUser from '../../utils/localUser.js';
+import Swal from 'sweetalert2';
 
 const route = useRoute()
 const router = useRouter()
@@ -97,10 +98,32 @@ onMounted(async () => {
 })
 
 const deleteVehiculo = async (id) => {
-    alert('Se está eliminando la vehiculo con id: ' + id)
-    const res = await Vehiculos.delete(id)
-    console.log(res)
-    alert('Eliminada!!')
-    router.push({ name: 'vehiculosList' })
+
+    Swal.fire({
+        title: "Deseas eliminar el vehículo?",
+        text: 'vehículo con id: ' + id,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1acd81",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+
+            const res = await Vehiculos.delete(id)
+            console.log(res)
+
+            Swal.fire({
+                title: "Eliminado!",
+                text: "El vehículo ha sido eliminada.",
+                icon: "success"
+            });
+
+            router.push({ name: 'vehiculosList' })
+        }
+    });
+
+
 }
 </script>

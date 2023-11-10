@@ -1,6 +1,7 @@
 <template>
     <RouterLink :to="{ path: '/conversaciones/' + idConversacion }">
-        <div class="border-2 flex flex-row justify-between items-center align-middle max-w-md rounded-lg h-12 my-2 mx-2">
+        <div
+            class="border-2 flex flex-row justify-between items-center align-middle max-w-md rounded-lg h-12 my-2 mx-2 w-96">
             <div class="flex items-center justify-center h-full align-middle w-14 text-xl bg-jade-100 text-jade-400">
                 <i class="bi bi-chat-fill"></i>
             </div>

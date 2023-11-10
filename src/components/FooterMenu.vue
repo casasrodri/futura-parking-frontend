@@ -72,7 +72,7 @@ onMounted(() => {
 
     setInterval(() => {
         contarMensajesSinLeer()
-    }, 60 * 1000)
+    }, 5000)
 })
 
 function analizarRuta() {

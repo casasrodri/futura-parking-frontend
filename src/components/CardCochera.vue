@@ -1,7 +1,7 @@
 <template>
     <RouterLink :to="{ name: 'cocherasView', params: { id: cochera._id } }">
         <div id="card"
-            class="m-3 max-w-sm p-5 pb-2 bg-white border border-jade-200 rounded-lg shadow hover:bg-jade-100 hover:border-jade-400 hover:shadow-md flex flex-col items-center justify-center">
+            class="m-3 w-96 p-5 pb-2 bg-white border border-jade-200 rounded-lg shadow hover:bg-jade-100 hover:border-jade-400 hover:shadow-md flex flex-col items-center justify-center">
 
             <h5 id="titulo" class="block mb-2 text-4xl font-bold tracking-tight text-jade-800">
                 {{ cochera.numero }}

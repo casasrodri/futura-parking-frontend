@@ -29,7 +29,7 @@
         </div>
 
 
-        <div id="zona-mensajes" class="max-h-40 overflow-y-auto bg-jade-50 mt-3" ref="scrollContainer">
+        <div id="zona-mensajes" class="sector-chat overflow-y-auto bg-jade-50 mt-3" ref="scrollContainer">
             <template v-for="mensaje in mensajesEntreUsuarios" :key="mensaje._id">
                 <MensajeChat :msj="mensaje" />
             </template>
@@ -173,5 +173,11 @@ const escribiendo = () => {
 .max-h-40 {
     max-height: 32rem;
     /* Establece la altura máxima en píxeles o en la unidad deseada */
+}
+
+.sector-chat {
+    height: calc(100vh - 275px);
+    /* Resta 100px del alto de la pantalla */
+    background-color: #f0f0f0;
 }
 </style>

@@ -16,9 +16,9 @@ const props = defineProps({
 
 const selected = computed(() => {
     if (props.seleccionado) {
-        return 'text-jade-100 hover:text-jade-50 bg-jade-600 hover:bg-jade-700'
+        return 'text-jade-100 hover:text-jade-50 bg-jade-700 hover:bg-jade-800'
     } else {
-        return 'text-jade-400 hover:text-jade-500 bg-jade-50 hover:bg-jade-100'
+        return 'text-jade-800 hover:text-jade-900 bg-jade-50 hover:bg-jade-100'
     }
 })
 </script>

@@ -2,26 +2,39 @@
     <section id="mensajes" class="mx-2 mt-4">
         <h2 class="block underline text-xl">Mensajes</h2>
 
-        <div v-if="conversacionesRelacionadas.length > 0">
-            <CardMensaje v-for="conversacion in conversacionesRelacionadas" :key="conversacion._id"
-                :nombre="conversacion.nombre" :cantidad="conversacion.mensajes_nuevos" :idConversacion="conversacion._id" />
+
+        <div v-if="esCreador">
+            <div v-if="conversacionesRelacionadas.length > 0">
+                <CardMensaje v-for="conversacion in conversacionesRelacionadas" :key="conversacion._id"
+                    :nombre="conversacion.nombre" :cantidad="conversacion.mensajes_nuevos"
+                    :idConversacion="conversacion._id" />
+            </div>
+            <div v-else>
+                <div class="text-gray-500 mt-1">
+                    Aún no has recibido mensajes por esta publicación...
+                </div>
+            </div>
         </div>
 
         <div v-else>
-            <div v-if="esCreador"><!-- Vista del CREADOR -->
-                <div v-if="conversacionesRelacionadas.length === 0">
-                    <div class="text-gray-500 mt-1">
-                        Aún no has recibido mensajes por esta publicación.
-                    </div>
-                </div>
-
+            <div v-if="conversacionesRelacionadas.length > 0">
+                <CardMensaje v-for="conversacion in conversacionesRelacionadas" :key="conversacion._id"
+                    :nombre="conversacion.nombre" :cantidad="conversacion.mensajes_nuevos"
+                    :idConversacion="conversacion._id" />
             </div>
-            <div v-else> <!-- Vista del INTERESADO -->
+            <div v-else>
                 <a @click="crearChat" class="text-jade-700">
                     <i class="bi bi-chat-left-text-fill"></i> Contactar por esta publicación
                 </a>
             </div>
         </div>
+
+
+
+
+
+
+
 
     </section>
 </template>
@@ -58,8 +71,10 @@ const obtenerConversaciones = async () => {
     const relac = []
 
     for (const conversacion of conversaciones) {
-        const conv = await procesarConversacionAsociada(conversacion)
-        relac.push(conv)
+        if (conversacion.oferente._id === localUser().id || conversacion.demandante._id === localUser().id) {
+            const conv = await procesarConversacionAsociada(conversacion)
+            relac.push(conv)
+        }
     }
 
     conversacionesRelacionadas.value = relac

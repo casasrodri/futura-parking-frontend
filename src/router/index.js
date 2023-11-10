@@ -24,6 +24,7 @@ import ConversacionesList from '../views/conversaciones/ConversacionesList.vue'
 import TransaccionesList from '../views/transacciones/TransaccionesList.vue'
 
 import AyudaView from '../views/AyudaView.vue'
+import VersionView from '../views/VersionView.vue'
 import TestView from '../views/TestView.vue'
 
 const router = createRouter({
@@ -37,13 +38,18 @@ const router = createRouter({
         {
           path: '/',
           name: 'home',
-          component: HomeView
-          // redirect: '/publicaciones/ofertas/otros'
+          component: HomeView,
+          redirect: '/publicaciones/ofertas/otros'
         },
         {
           path: '/ayuda',
           name: 'ayuda',
           component: AyudaView
+        },
+        {
+          path: '/version',
+          name: 'version',
+          component: VersionView
         },
         // COCHERAS
         {

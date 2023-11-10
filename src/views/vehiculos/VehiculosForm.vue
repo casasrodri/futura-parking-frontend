@@ -87,23 +87,42 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Vehiculo from '../../api/vehiculos.js'
 import localUser from '../../utils/localUser.js';
+import Swal from 'sweetalert2';
 
 const router = useRouter()
 const errores = ref([])
 const vehiculo = ref({})
 
 const actualizar = async () => {
-    alert('Se está actualizando')
-    const res = await Vehiculo.update(vehiculo.value._id, vehiculo.value)
-    console.log(res)
-    alert('Actualizado!!')
-    router.push({ name: 'vehiculosList' })
+    Swal.fire({
+        title: "Deseas guardar los cambios?",
+        text: 'Vehículo con id: ' + vehiculo.value._id,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1acd81",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+
+            const res = await Vehiculo.update(vehiculo.value._id, vehiculo.value)
+            console.log(res)
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Vehículo actualizado!",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            router.push({ name: 'vehiculosList' })
+        }
+    });
 }
 
 const registrar = async () => {
-    alert('Se está creando el nuevo vehiculo')
-
-
     const nuevoVehiculo = {
         patente: vehiculo.value.patente,
         marca: vehiculo.value.marca,
@@ -116,7 +135,15 @@ const registrar = async () => {
 
     const res = await Vehiculo.create(nuevoVehiculo)
     console.log(res)
-    alert('Creado!!')
+
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Vehículo creado!",
+        showConfirmButton: false,
+        timer: 1500
+    });
+
     router.push({ name: 'vehiculosList' })
 }
 

@@ -31,35 +31,6 @@
                 </div>
             </template>
 
-
-            <div class="my-3">
-                <label class="block mb-2 text-sm font-medium text-gray-900">
-                    Inicio
-                </label>
-                <input type="datetime-local" required v-model="publi.ini" :max="publi.fin"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
-                    placeholder="" />
-            </div>
-
-            <div class="my-3">
-                <label class="block mb-2 text-sm font-medium text-gray-900">
-                    Fin
-                </label>
-                <input type="datetime-local" required v-model="publi.fin" :min="publi.ini"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
-                    placeholder="" />
-            </div>
-
-            <div class="my-3">
-                <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900">
-                    Observaciones
-                </label>
-                <textarea id="observaciones" rows="3"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
-                    placeholder="" v-model="publi.observaciones" required></textarea>
-            </div>
-
-
             <div class="my-3" v-if="publi.tipo === 'oferta'">
                 <label class="block mb-2 text-sm font-medium text-gray-900">
                     Cochera
@@ -86,6 +57,33 @@
             </div>
 
 
+            <div class="my-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900">
+                    Inicio
+                </label>
+                <input type="datetime-local" required v-model="publi.ini" :max="publi.fin" :min="ahora"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+                    placeholder="" />
+            </div>
+
+            <div class="my-3">
+                <label class="block mb-2 text-sm font-medium text-gray-900">
+                    Fin
+                </label>
+                <input type="datetime-local" required v-model="publi.fin" :min="publi.ini"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+                    placeholder="" />
+            </div>
+
+            <div class="my-3">
+                <label for="observaciones" class="block mb-2 text-sm font-medium text-gray-900">
+                    Observaciones
+                </label>
+                <textarea id="observaciones" rows="3"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+                    placeholder="" v-model="publi.observaciones" required></textarea>
+            </div>
+
             <div class="flex w-full justify-end mt-4">
                 <button type="submit"
                     class="mx-1 text-white bg-jade-500 hover:bg-jade-600 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
@@ -110,16 +108,42 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Publicacion from '../../api/publicaciones.js'
+import { DateTime } from 'luxon';
+import Swal from 'sweetalert2';
 
 const router = useRouter()
 const publi = ref({ tipo: '', estado: 'disponible', oferta: {}, demanda: {} })
 
+const usoHorario = Intl.DateTimeFormat().resolvedOptions().timeZone
+const ahora = DateTime.now().setZone(usoHorario).toISO().slice(0, 16)
+
 const actualizar = async () => {
-    alert('Se está actualizando la publicación...')
-    const res = await Publicacion.update(publi.value._id, publiGuardar.value)
-    console.log(res)
-    alert('Actualizada!!')
-    router.go(-1)
+    Swal.fire({
+        title: "Deseas guardar los cambios?",
+        text: 'Publicación con id: ' + publi.value._id,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1acd81",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+
+            const res = await Publicacion.update(publi.value._id, publiGuardar.value)
+            console.log(res)
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Publicación actualizada!",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            router.go(-1)
+        }
+    });
 }
 
 const publiGuardar = computed(() => {
@@ -139,10 +163,17 @@ const cocherasPropietario = ref([])
 const vehiculosPropietario = ref([])
 
 const registrar = async () => {
-    alert('Se está creando la nueva publicación...')
     const res = await Publicacion.create(publiGuardar.value)
     console.log(res)
-    alert('Creada!!')
+
+    Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Publicación creada!",
+        showConfirmButton: false,
+        timer: 1500
+    });
+
     router.go(-1)
 }
 

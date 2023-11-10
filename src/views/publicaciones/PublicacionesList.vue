@@ -14,9 +14,11 @@
             </div>
         </template>
         <template v-else>
-            <template v-for="publi in publicaciones" :key="publi._id">
-                <CardPubli :publicacion="publi" />
-            </template>
+            <div class="flex flex-col items-center">
+                <template v-for="publi in publicaciones" :key="publi._id">
+                    <CardPubli :publicacion="publi" />
+                </template>
+            </div>
         </template>
     </div>
 </template>
@@ -38,11 +40,13 @@ const getPublicaciones = async () => {
     const tipoPub = route.params.tipoPub === 'ofertas' ? 'oferta' : 'demanda'
     const { data } = await Publicacion.obtenerDisponibles(tipoPub);
 
+
     if (route.params.tipoVis === 'mias') {
         renderizar = data.filter(publi => publi.creador._id === localUser().id)
     } else {
         renderizar = data.filter(publi => publi.creador._id !== localUser().id)
     }
+    console.log(renderizar)
 
     publicaciones.value = renderizar
 }
